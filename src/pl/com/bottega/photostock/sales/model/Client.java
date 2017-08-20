@@ -45,4 +45,12 @@ public class Client {
         balance = balance.add(amount);
         transactions.add(new Transaction(amount, "Recharge account"));
     }
+
+    public ClientStatus getStatus() {
+        return status;
+    }
+
+    public int discountPercent() {
+        return status.discountPercent();
+    }
 }

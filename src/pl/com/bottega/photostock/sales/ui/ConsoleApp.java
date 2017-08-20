@@ -10,8 +10,6 @@ public class ConsoleApp {
 
     public static void main(String[] args) {
 
-        Set<String> tags = new HashSet<>();
-        tags.add("Kotki");
         PictureRepository repository = new InMemoryPictureRepository();
         Picture picture1 = repository.get(1L);
         Picture picture2 = repository.get(2L);

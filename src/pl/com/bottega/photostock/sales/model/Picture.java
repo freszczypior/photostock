@@ -36,10 +36,18 @@ public class Picture {
         return number.hashCode();
     }
 
-    public Money calculatePrice(Client client) {
-
-        return price;
+    public Money calculatePrice(Client owner) {
+        return price.percent(100 - owner.discountPercent());
     }
+
+//    public Money calculatePrice(Client owner) {     //TODO moja wersja, tylko coś nie tak ze składnią
+//        ClientStatus status = owner.getStatus();
+//        if (!(status.equals(ClientStatus.STANDARD) && status.equals(ClientStatus.VIP))) {
+//            return status.equals(ClientStatus.SILVER) ? price.percent(95) :
+//                    status.equals(ClientStatus.GOLD) ? price.percent(90) : price.percent(85);)
+//        }
+//        return price;
+//    }
 
     public boolean isAvailable() {
         return active && reservedBy == null;
