@@ -8,10 +8,10 @@ public enum ClientStatus {
     private int discountPercent;
 
     ClientStatus(int discount){
-    this.discountPercent = discount;
+        this.discountPercent = discount;
     }
     public int discountPercent() {
-        return discountPercent();
+        return discountPercent;
     }
 
 }

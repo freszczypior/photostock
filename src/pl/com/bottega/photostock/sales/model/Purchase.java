@@ -8,10 +8,10 @@ public class Purchase {
 
     private LocalDateTime purchaseDate;
     private Client buyer;
-    private Collection<Picture> items;
+    private Collection<Product> items;
 
 
-    public Purchase(Client buyer, Collection<Picture> items) {
+    public Purchase(Client buyer, Collection<Product> items) {
         this.buyer = buyer;
         this.items = items;
         this.purchaseDate = LocalDateTime.now();

@@ -1,6 +1,5 @@
 package pl.com.bottega.photostock.sales.model;
 
-
 import java.util.HashSet;
 import java.util.Set;
 

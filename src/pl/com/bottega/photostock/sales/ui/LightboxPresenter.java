@@ -2,7 +2,7 @@ package pl.com.bottega.photostock.sales.ui;
 
 import pl.com.bottega.photostock.sales.model.Client;
 import pl.com.bottega.photostock.sales.model.LightBox;
-import pl.com.bottega.photostock.sales.model.Picture;
+import pl.com.bottega.photostock.sales.model.Product;
 
 public class LightboxPresenter {
 
@@ -11,10 +11,10 @@ public class LightboxPresenter {
         System.out.println("-------------------------------");
         int index = 0;
         Client client = lightBox.getClient();
-        for (Picture picture: lightBox.getItems()) {
+        for (Product product: lightBox.getItems()) {
             System.out.println(String.format("%s %d. %d | %s",
-                    picture.isAvailable() ? "" : "X", index++, picture.getNumber(),
-                    picture.calculatePrice(client)));
+                    product.isAvailable() ? "" : "X", index++, product.getNumber(),
+                    product.calculatePrice(client)));
         }
 
     }

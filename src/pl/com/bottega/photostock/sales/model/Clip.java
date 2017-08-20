@@ -1,5 +1,6 @@
 package pl.com.bottega.photostock.sales.model;
 
+
 import java.time.Duration;
 
 public class Clip extends AbstractProduct{
