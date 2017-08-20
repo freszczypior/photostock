@@ -1,5 +1,6 @@
 package pl.com.bottega.photostock.sales.ui;
 
+import pl.com.bottega.photostock.sales.infrastructure.InMemoryPictureRepository;
 import pl.com.bottega.photostock.sales.model.*;
 
 import java.util.HashSet;
@@ -11,9 +12,10 @@ public class ConsoleApp {
 
         Set<String> tags = new HashSet<>();
         tags.add("Kotki");
-        Picture picture1 = new Picture(1L, tags, Money.valueOf(10));
-        Picture picture2 = new Picture(2L, tags, Money.valueOf(5));
-        Picture picture3 = new Picture(3L, tags, Money.valueOf(15));
+        PictureRepository repository = new InMemoryPictureRepository();
+        Picture picture1 = repository.get(1L);
+        Picture picture2 = repository.get(2L);
+        Picture picture3 = repository.get(3L);
 
         Client client = new Client("Jan Nowak", new Address("ul. Północna 11", "Polska", "Lublin", "20-001"));
         client.reCharge(Money.valueOf(30));

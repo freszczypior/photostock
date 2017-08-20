@@ -1,22 +1,24 @@
 package pl.com.bottega.photostock.sales.model;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Offer {
 
-    private Set<Picture> items;
+    private List<Picture> items;
     private Client owner;
 
     public Offer(Client owner, Collection<Picture> items) {
         this.owner = owner;
-        this.items = new HashSet<>(items);  // set nie jest immutable, tworzę nową i przekazuję do niej tą z zewnątrz, którą dostaję, aby ktoś nie zmodyfikował mi mojej,
+        this.items = new LinkedList<>(items);// set nie jest immutable, tworzę nową i przekazuję do niej tą z zewnątrz, którą dostaję, aby ktoś nie zmodyfikował mi mojej,
+        this.items.sort(new Comparator<Picture>() {
+            @Override
+            public int compare(Picture p1, Picture p2) {
+                return p2.calculatePrice(owner).compareTo(p1.calculatePrice(owner));
+            }
+        });
     }
 
     public boolean sameAs(Offer offer, Money money) {
-
         return false;
     }
 
