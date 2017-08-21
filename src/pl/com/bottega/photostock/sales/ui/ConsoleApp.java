@@ -7,6 +7,11 @@ public class ConsoleApp {
 
     public static void main(String[] args) {
 
+        VIPClient vipClient = new VIPClient("Jan Nowak",
+                new Address("ul. Północna 11", "Polska", "Lublin", "20-001"),
+                Money.valueOf(0),Money.valueOf(0));
+
+
         PictureRepository repository = new InMemoryPictureRepository();
         Product picture1 = repository.get(1L);
         Product picture2 = repository.get(2L);
