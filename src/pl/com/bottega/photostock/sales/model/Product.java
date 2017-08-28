@@ -13,4 +13,6 @@ public interface Product {
     void unreservedPer(Client owner);
 
     void soldPer(Client client);
+
+    int compareTo(Product other);
 }

@@ -21,9 +21,15 @@ public class InMemoryPictureRepository implements PictureRepository {
         Picture picture1 = new Picture(1L, tags, Money.valueOf(10));
         Picture picture2 = new Picture(2L, tags, Money.valueOf(5));
         Picture picture3 = new Picture(3L, tags, Money.valueOf(15));
+        Picture picture4 = new Picture(4L, tags, Money.valueOf(20));
+        Picture picture5 = new Picture(5L, tags, Money.valueOf(25));
         REPO.put(1L, picture1);
         REPO.put(2L, picture2);
         REPO.put(3L, picture3);
+        REPO.put(4L, picture4);
+        REPO.put(5L, picture5);
+
+
     }
 
     @Override

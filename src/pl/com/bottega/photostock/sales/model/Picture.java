@@ -17,6 +17,7 @@ public class Picture extends AbstractProduct{
         this(number, tags, price, true);
     }
 
+
     @Override
     public boolean equals(Object o) {       // normalny equals porównuję tylko referencje, ten zawartość
         if (this == o) return true;

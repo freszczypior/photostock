@@ -1,6 +1,8 @@
 package pl.com.bottega.photostock.sales.model;
 
 
+import java.math.BigDecimal;
+
 public class Money implements Comparable<Money> {
 
     public static final String DEFAULT_CURRENCY = "CREDIT";
@@ -14,7 +16,7 @@ public class Money implements Comparable<Money> {
         this.currency = DEFAULT_CURRENCY;
     }
 
-    private Money(Long cents, String currency) {    //noowy konstruktor na potrzeby metody add
+    public Money(Long cents, String currency) {    //noowy konstruktor na potrzeby metody add
         this.cents = cents;
         this.currency = currency;
     }
@@ -36,26 +38,6 @@ public class Money implements Comparable<Money> {
         return new Money(cents + other.cents, currency);
     }
 
-    public String toString() {
-        return String.format("%d.%d %s", cents / 100, cents % 100, currency);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Money)) return false;
-        Money money = (Money) o;
-        if (!cents.equals(money.cents)) return false;
-        return currency.equals(money.currency);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = cents.hashCode();
-        result = 31 * result + currency.hashCode();
-        return result;
-    }
-
     public Money subTract(Money other) {
         checkCurrency(other);
         return add(other.neg());
@@ -63,6 +45,23 @@ public class Money implements Comparable<Money> {
 
     public Money neg() {
         return new Money(-cents, currency);
+    }
+
+    public String toString() {      //TODO źle wyświetla po przecinku, z 02 robi 2
+        return String.format("%d.%d %s", cents / 100, cents % 100, currency);
+    }
+
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public static String getDefaultCurrency() {
+        return DEFAULT_CURRENCY;
+    }
+
+    public Long getCents() {
+        return cents;
     }
 
     private void checkCurrency(Money other) {
@@ -94,5 +93,42 @@ public class Money implements Comparable<Money> {
 
     public Money percent(int percent) {
         return new Money(cents * percent / 100, currency);
+    }
+
+
+    //wersja z BigDecimalem
+    public Money convert(String targetCurrancy, Double exRate) {
+        if (this.getCurrency().equals(targetCurrancy))
+            return this;
+        else {
+            BigDecimal resultBD = BigDecimal.valueOf(this.getCents()).multiply(BigDecimal.valueOf(exRate));
+            long resultL = resultBD.longValue();
+            return new Money(resultL, targetCurrancy);
+        }
+    }
+    //wersja bez BigDecimala
+    public Money convertV2(String targetCurrancy, Double exRate) {
+        if (this.getCurrency().equals(targetCurrancy))
+            return this;
+        else {
+            long result = (this.getCents() * (long) (exRate * 100.00)) / 100;
+            return new Money(result, targetCurrancy);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Money)) return false;
+        Money money = (Money) o;
+        if (!cents.equals(money.cents)) return false;
+        return currency.equals(money.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cents.hashCode();
+        result = 31 * result + currency.hashCode();
+        return result;
     }
 }

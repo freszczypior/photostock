@@ -12,4 +12,8 @@ public class Transaction {  // dodatkowa klasa, jej chyba nie ma w opisie
         this.amount = amount;
         this.description = description;
     }
+
+    public Money getAmount() {
+        return amount;
+    }
 }

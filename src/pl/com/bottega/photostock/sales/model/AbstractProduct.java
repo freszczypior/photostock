@@ -62,5 +62,9 @@ public abstract class AbstractProduct implements Product {
         if (reservedBy == null || !reservedBy.equals(client))
             throw new IllegalStateException(String.format("Product is not reserved by %s", client));
     }
+    @Override
+    public int compareTo(Product other){
+        return (int) (this.number - other.getNumber());
+    }
 
 }

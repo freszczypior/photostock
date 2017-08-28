@@ -1,6 +1,5 @@
 package pl.com.bottega.photostock.sales.model;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
