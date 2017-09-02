@@ -39,8 +39,7 @@ public abstract class AbstractProduct implements Product {
     
     @Override
     public void reservedPer(Client client) {
-        if (!isAvailable())
-            throw new IllegalStateException("Product is not available");
+        ensureAvailable();
         reservedBy = client;
     }
 
@@ -65,6 +64,19 @@ public abstract class AbstractProduct implements Product {
     @Override
     public int compareTo(Product other){
         return (int) (this.number - other.getNumber());
+    }
+
+    @Override
+    public boolean equals(Object o) {       // normalny equals porównuję tylko referencje, ten zawartość
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return number.equals(product.getNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return number.hashCode();
     }
 
 }

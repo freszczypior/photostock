@@ -34,7 +34,7 @@ public class Offer {
         return total;
     }
 
-    public Collection<Product> getItems() {
-        return Collections.unmodifiableCollection(items);   //nasze itemsy zostały udekorowane niemodyfikowalną kolekcją, jak ktoś będzie chciał coś dodać to wurzuci wyjątek
+    public List<Product> getItems() {
+        return Collections.unmodifiableList(items);   //nasze itemsy zostały udekorowane niemodyfikowalną kolekcją, jak ktoś będzie chciał coś dodać to wurzuci wyjątek
     }
 }

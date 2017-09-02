@@ -5,7 +5,6 @@ import java.util.Set;
 
 public class Picture extends AbstractProduct{
 
-    private Long number = super.number;
     private Set<String> tags;
 
     public Picture(Long number, Set<String> tags, Money price, Boolean active) {
@@ -18,17 +17,6 @@ public class Picture extends AbstractProduct{
     }
 
 
-    @Override
-    public boolean equals(Object o) {       // normalny equals porównuję tylko referencje, ten zawartość
-        if (this == o) return true;
-        if (!(o instanceof Picture)) return false;
-        Picture picture = (Picture) o;
-        return super.number.equals(picture.number);
-    }
 
-    @Override
-    public int hashCode() {
-        return super.number.hashCode();
-    }
 
 }

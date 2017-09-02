@@ -17,32 +17,22 @@ public class CurrencyConventer {
     }
 
     public Money convert(Money amount) {   //konwertuje kwotę na walutę główną i zwraca ją w nowym obiekcie Money
-        Double rates = exchangeRates.get(amount.getCurrency());
-        return amount.convert("PLN", rates);
-    }
-
-    public Money convert(Money amount, String currancy) {   //konwertuję na dowolną walutę i zwraca ją w nowym obiekcie
-        if (amount.getCurrency().equals(currancy))      //TODO a co jak obie nie pln i nie ma ich w exRates?
+        if (amount.currancy().equals(mainCurrency))
             return amount;
-        if (amount.getCurrency().equals("PLN"))
-            if (!exchangeRates.keySet().contains(currancy))
-                throw new IllegalArgumentException("This currency is not supported");
-            else
-                return amount.convert(currancy, reverseExRates(exchangeRates.get(amount.getCurrency())));
-        if (currancy.equals("PLN"))
-            if (!exchangeRates.keySet().contains(amount.getCurrency()))
-                throw new IllegalArgumentException("This currency is not supported");
-            else
-                return convert(amount);
-        else {
-            if (!exchangeRates.keySet().contains(currancy) || !exchangeRates.keySet().contains(currancy))
-                throw new IllegalArgumentException("This currency is not supported");
-            else
-                return convert(amount).convert(currancy, exchangeRates.get(currancy));
-        }
+        return  amount.convert(mainCurrency, exRate(amount.currancy()));
     }
 
-    private Double reverseExRates(Double rate) {     // z kursu EUR>PLN robi PLN>EUR
-        return BigDecimal.valueOf(ONE_UNIT).divide(BigDecimal.valueOf(rate), 2, RoundingMode.DOWN).doubleValue();
+    public Money convert(Money amount, String targetCurrency) {   //konwertuję na dowolną walutę i zwraca ją w nowym obiekcie
+        if (targetCurrency.equals(mainCurrency))
+                return convert(amount);
+        if (amount.currancy().equals(mainCurrency))
+            return amount.convert(targetCurrency, 1/exRate(targetCurrency));
+        return convert(convert(amount), targetCurrency);
+    }
+
+    private Double exRate(String currancy){     //zwraca kurs, jak nie ma to rzuca exception
+        if (!exchangeRates.containsKey(currancy))
+            throw new IllegalArgumentException("No ex rate for " + currancy);
+        return exchangeRates.get(currancy);
     }
 }

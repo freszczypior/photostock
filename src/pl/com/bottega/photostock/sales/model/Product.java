@@ -15,4 +15,9 @@ public interface Product {
     void soldPer(Client client);
 
     int compareTo(Product other);
+
+    default void ensureAvailable(){      // metoda defoultowa, implementacja metody w interface
+        if (!isAvailable())
+            throw  new ProductNotAvailableException(this);
+    }
 }

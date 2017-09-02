@@ -1,6 +1,6 @@
 package pl.com.bottega.photostock.sales.ui;
 
-import pl.com.bottega.photostock.sales.infrastructure.InMemoryPictureRepository;
+import pl.com.bottega.photostock.sales.infrastructure.InMemoryProductRepository;
 import pl.com.bottega.photostock.sales.model.*;
 
 import java.util.HashMap;
@@ -12,61 +12,59 @@ public class ConsoleApp {
 
         //WSPÓLNE
 
-        PictureRepository repository = new InMemoryPictureRepository();
-        Product picture1 = repository.get(1L);
-        Product picture2 = repository.get(2L);
-        Product picture3 = repository.get(3L);
-        Product picture4 = repository.get(4L);
-        Product picture5 = repository.get(5L);
+        ProductRepository repository = new InMemoryProductRepository();
+        Product product1 = repository.get(1L);
+        Product product2 = repository.get(2L);
+        Product product3 = repository.get(3L);
+        Product product4 = repository.get(4L);
+        Product product5 = repository.get(5L);
 
         LightboxPresenter lightboxPresenter = new LightboxPresenter();
 
         //CLIENT
 
-        Client client = new Client("Jan Nowak", new Address("ul. Północna 11", "Polska", "Lublin", "20-001"));
-        client.reCharge(Money.valueOf(30));
+        Client standardCli = new StandardClient("Jan Nowak", new Address("ul. Północna 11", "Polska", "Lublin", "20-001"));
+        standardCli.reCharge(Money.valueOf(30));
 
-        Reservation reservation = new Reservation(client);
-        LightBox lightBox = new LightBox(client, "Kotki");
+        Reservation reservation = new Reservation(standardCli);
+        LightBox lightBox = new LightBox(standardCli, "Kotki");
 
-        lightBox.add(picture1);
-        lightBox.add(picture2);
-        lightBox.add(picture3);
+        lightBox.add(product1);
+        lightBox.add(product2);
+        lightBox.add(product3);
 
         lightboxPresenter.showLightbox(lightBox);
 
-        reservation.add(picture1);
-        reservation.add(picture2);
-        reservation.add(picture3);
+        reservation.add(product1);
+        reservation.add(product2);
+        reservation.add(product3);
 
         Offer offer = reservation.generateOffer();
         Money cost = offer.getTotalCost();      // dla ułatwienia, aby móc później kilka razy ją wywołać
 
         System.out.println(String.format("W rezerwacji jest %d produktów.", reservation.getItemCount()));   // "%d" (d dla liczb, dla stringów %s) jest tutaj znakiem specjalnym, pod niego podstawiamy konkretną wartość
-        if (client.canAfford(cost)) {
-            Purchase purchase = new Purchase(client, offer.getItems());
-            client.charge(cost, String.format("Zakup %s.", purchase));
+        if (standardCli.canAfford(cost)) {
+            Purchase purchase = new Purchase(standardCli, offer.getItems());
+            standardCli.charge(cost, String.format("Zakup %s.", purchase));
             System.out.println(String.format("Ilość zakupionych zdjęć: %d, całkowity koszt %s.", offer.getItemCount(), offer.getTotalCost()));
         } else
             System.out.println("Hehehe, nie stać Cię!");
 
         //VIPCLIENT
 
-        VIPClient vipClient = new VIPClient("Andrzej Nowak",
-                new Address("ul. Wschodnia 11", "Polska", "Gdańsk", "20-115"),
-                Money.valueOf(100));
-//        System.out.println(vipClient.getTransactions().size());
+        Client vipClient = new VIPClient("Andrzej Nowak", new Address("ul. Wschodnia 11", "Polska", "Gdańsk", "20-115"));
+        vipClient.reCharge(Money.valueOf(3000));
 
         Reservation vipReservation = new Reservation(vipClient);
         LightBox vipLightBox = new LightBox(vipClient, "VIPClient Kotki");
 
-        vipLightBox.add(picture4);
-        vipLightBox.add(picture5);
+        vipLightBox.add(product4);
+        vipLightBox.add(product5);
 
         lightboxPresenter.showLightbox(vipLightBox);
 
-        vipReservation.add(picture4);
-        vipReservation.add(picture5);
+        vipReservation.add(product4);
+        vipReservation.add(product5);
 
         Offer vipOffer = vipReservation.generateOffer();
         Money vipCost = vipOffer.getTotalCost();      // dla ułatwienia, aby móc później kilka razy ją wywołać

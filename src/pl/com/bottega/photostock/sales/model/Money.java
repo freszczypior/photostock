@@ -3,7 +3,7 @@ package pl.com.bottega.photostock.sales.model;
 
 import java.math.BigDecimal;
 
-public class Money implements Comparable<Money> {
+public class Money implements Comparable<Money> {   // ta klasa jest tak skonstruowana, że jest immutable, żadna z metod w tej klasie nie zmienia stanu obiektu, warto do tego dążyć, bo taki kod jest łatwiej anlizować, kod wywołany wiele razy nie zmiania obiektów, zawsze powienien dać ten sam wynik
 
     public static final String DEFAULT_CURRENCY = "CREDIT";
     public static final Money ZERO = new Money();
@@ -52,7 +52,7 @@ public class Money implements Comparable<Money> {
     }
 
 
-    public String getCurrency() {
+    public String currancy() {
         return currency;
     }
 
@@ -95,25 +95,14 @@ public class Money implements Comparable<Money> {
         return new Money(cents * percent / 100, currency);
     }
 
+//    public Money convert(String targetCurrancy, Double exRate) {    //moja wersja
+//        if (this.currancy().equals(targetCurrancy))
+//            return this;
+//        return new Money(BigDecimal.valueOf(this.getCents()).multiply(BigDecimal.valueOf(exRate)).longValue(), targetCurrancy);
+//    }
 
-    //wersja z BigDecimalem
     public Money convert(String targetCurrancy, Double exRate) {
-        if (this.getCurrency().equals(targetCurrancy))
-            return this;
-        else {
-            BigDecimal resultBD = BigDecimal.valueOf(this.getCents()).multiply(BigDecimal.valueOf(exRate));
-            long resultL = resultBD.longValue();
-            return new Money(resultL, targetCurrancy);
-        }
-    }
-    //wersja bez BigDecimala
-    public Money convertV2(String targetCurrancy, Double exRate) {
-        if (this.getCurrency().equals(targetCurrancy))
-            return this;
-        else {
-            long result = (this.getCents() * (long) (exRate * 100.00)) / 100;
-            return new Money(result, targetCurrancy);
-        }
+        return new Money((long) (cents * exRate), targetCurrancy);   // zrzutowanie na lnga spowoduję zrzutowanie w dół na podłogę
     }
 
     @Override

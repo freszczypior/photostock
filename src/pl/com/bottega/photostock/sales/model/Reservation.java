@@ -14,11 +14,9 @@ public class Reservation {
     }
 
     public void add(Product product) {
-        if (product.isAvailable()) {
-            items.add(product);
-            product.reservedPer(owner);
-        } else
-            throw new IllegalStateException("Product is not available");
+        product.ensureAvailable();
+        items.add(product);
+        product.reservedPer(owner);
     }
 
     public void remove(Product product) {
