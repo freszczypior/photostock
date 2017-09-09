@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class Picture extends AbstractProduct{
 
+
     private Set<String> tags;
 
     public Picture(Long number, Set<String> tags, Money price, Boolean active) {
@@ -16,7 +17,14 @@ public class Picture extends AbstractProduct{
         this(number, tags, price, true);
     }
 
+    public Set<String> getTags() {
+        return tags;
+    }
 
+    public boolean hasTags(Set<String> tags){
+
+        return this.tags.containsAll(tags);
+    }
 
 
 }

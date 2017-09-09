@@ -4,13 +4,14 @@ package pl.com.bottega.photostock.sales.model;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 public class Purchase {
 
     private LocalDateTime purchaseDate;
     private Client buyer;
     private List<Product> items;    // TODO zmiana z collections na list, aby móc posortować
-
+    private String number;
 
     public Purchase(Client buyer, List<Product> items) {
         this.buyer = buyer;
@@ -22,5 +23,13 @@ public class Purchase {
                 return p1.compareTo(p2);
             }
         });
+        for (Product product: items) {
+            product.soldPer(buyer);
+        }
+        this.number = UUID.randomUUID().toString();
+    }
+
+    public String getNumber() {
+        return number;
     }
 }

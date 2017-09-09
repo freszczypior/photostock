@@ -3,12 +3,14 @@ package pl.com.bottega.photostock.sales.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Client {
 
     private String name;
     private Address address;
     protected ClientStatus status;
+    private String number;
 
     public List<Transaction> getTransactions() {
         return transactions;
@@ -16,13 +18,13 @@ public abstract class Client {
 
     protected List<Transaction> transactions = new LinkedList<>();    //lista z transakcjami, tego nie ma  w opisie
 
-
     public Client(String name, Address address, ClientStatus status, Money balance) {
         this.name = name;
         this.address = address;
         this.status = status;
         if (balance().gt(Money.ZERO))
             transactions.add(new Transaction(balance, "First charge"));
+        this.number = UUID.randomUUID().toString();
     }
 
     public Client(String name, Address address) {
@@ -57,5 +59,16 @@ public abstract class Client {
             sum.add(transaction.getAmount());
         }
         return sum;
+    }
+    public String getNumber() {
+        return number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean hasLogin(String login) {
+        return name.equals(login);
     }
 }

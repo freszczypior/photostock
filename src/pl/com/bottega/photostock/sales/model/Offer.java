@@ -5,6 +5,8 @@ import java.util.*;
 public class Offer {
 
     private List<Product> items;
+
+
     private Client owner;
 
     public Offer(Client owner, Collection<Product> items) {
@@ -37,4 +39,16 @@ public class Offer {
     public List<Product> getItems() {
         return Collections.unmodifiableList(items);   //nasze itemsy zostały udekorowane niemodyfikowalną kolekcją, jak ktoś będzie chciał coś dodać to wurzuci wyjątek
     }
+
+
+    public Purchase purchase() {
+        Money cost = getTotalCost();
+        Purchase purchase = new Purchase(owner, items);
+        owner.charge(cost, String.format("Purchase number %s", purchase.getNumber()));
+        return purchase;
+    }
+    public Client getOwner() {
+        return owner;
+    }
+
 }

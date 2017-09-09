@@ -3,14 +3,19 @@ package pl.com.bottega.photostock.sales.model;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class Reservation {
 
     private Client owner;
+
+
     private Set<Product> items = new LinkedHashSet<>();
+    private String number;
 
     public Reservation(Client owner) {
         this.owner = owner;
+        this.number = UUID.randomUUID().toString();     // generowanie losowego ciągu cyfr i liter, chyba 16 znaków
     }
 
     public void add(Product product) {
@@ -25,6 +30,9 @@ public class Reservation {
         else
             throw new IllegalArgumentException("Product is not part of this reservation");
     }
+    public Client getClient() {
+        return owner;
+    }
 
     public Offer generateOffer() {
         return new Offer(owner, items);
@@ -32,5 +40,13 @@ public class Reservation {
 
     public int getItemCount() {
         return items.size();
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public Set<Product> getItems() {
+        return items;
     }
 }

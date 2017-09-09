@@ -1,5 +1,7 @@
 package pl.com.bottega.photostock.sales.model;
 
+import pl.com.bottega.photostock.sales.model.exceptions.ProductNotAvailableException;
+
 public interface Product {
 
     Long getNumber();

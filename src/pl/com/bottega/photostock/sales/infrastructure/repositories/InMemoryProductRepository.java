@@ -1,9 +1,7 @@
-package pl.com.bottega.photostock.sales.infrastructure;
+package pl.com.bottega.photostock.sales.infrastructure.repositories;
 
-import pl.com.bottega.photostock.sales.model.Money;
-import pl.com.bottega.photostock.sales.model.Picture;
-import pl.com.bottega.photostock.sales.model.Product;
-import pl.com.bottega.photostock.sales.model.ProductRepository;
+import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.repositories.ProductRepository;
 
 import java.util.*;
 
@@ -44,11 +42,37 @@ public class InMemoryProductRepository implements ProductRepository {
         if (REPO.containsKey(number))
             return Optional.of(REPO.get(number));
         else
-        return Optional.empty();
+            return Optional.empty();
     }
 
     @Override
     public void save(Product product) {
         REPO.put(product.getNumber(), product);
+    }
+
+    @Override
+    public List<Product> find(Client client, Set<String> tags, Money from, Money to) {
+        List<Product> result = new LinkedList<>();
+        for (Product product : REPO.values())
+            if (product instanceof Picture) {       //lub product.getClass().equals.(Pisture.class) instance zwróci true nawet jak obiekt będzie instancją dziedziczącą po pictur, druga metoda z getclass zzwróci tru tylko dl tej konkretnej klasy
+                Picture picture = (Picture) product;
+                if (matchesCriteria(picture, client, tags, from, to))
+                result.add(product);
+            }
+        return result;
+    }
+
+    private boolean matchesCriteria(Picture picture, Client client, Set<String> tags, Money from, Money to){
+        if (tags != null && !picture.hasTags(tags))
+            return false;
+
+        Money price = picture.calculatePrice(client);
+
+        if (from != null && from.gte(price))
+            return false;
+
+        if (to != null && to.lte(price))
+            return false;
+        return true;
     }
 }

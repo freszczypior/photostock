@@ -1,5 +1,7 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.exceptions;
 
+
+import pl.com.bottega.photostock.sales.model.Product;
 
 public class ProductNotAvailableException extends RuntimeException{
 
