@@ -7,13 +7,13 @@ import pl.com.bottega.photostock.sales.model.Product;
 public class LightboxPresenter {
 
     public void showLightbox(LightBox lightBox){
-        System.out.println(lightBox.getName());
+        System.out.println(String.format("Nazwa: %s", lightBox.getName()));
         System.out.println("-------------------------------");
         int index = 0;
         Client client = lightBox.getClient();
         for (Product product: lightBox.getItems()) {
             System.out.println(String.format("%s %d. %d | %s",
-                    product.isAvailable() ? "" : "X", index++, product.getNumber(),
+                    product.isAvailable() ? "" : "X", ++index, product.getNumber(),
                     product.calculatePrice(client)));
         }
 

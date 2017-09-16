@@ -82,7 +82,7 @@ public class ConsoleApp {
 //        Map<String, Double> rates = new HashMap<>();
 //        rates.put("USD", 3.6020);
 //        rates.put("EUR", 4.2345);
-//        CurrencyConventer cc = new CurrencyConventer("PLN", rates);
+//        CurrencyConverter cc = new CurrencyConverter("PLN", rates);
 //        System.out.println(cc.convert(new Money(1000L, "USD")));
 //    }
 }

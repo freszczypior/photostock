@@ -73,4 +73,9 @@ public class MoneyTest {
         assertEquals(Money.valueOf(0.01), Money.valueOf(0.11).percent(10));
         assertEquals(Money.valueOf(0.01), Money.valueOf(0.19).percent(10)); //TODO póki co zaokrągla w dół, pokazuję 1 centa a wynikowi bliżej do 2, pobawić się
     }
+
+    @Test
+    public void shouldConvertCurrencies() {
+        assertEquals(Money.valueOf(3.5, "PLN"), Money.valueOf(1, "USD").convert("PLN", 3.5));
+    }
 }

@@ -30,9 +30,11 @@ public class PhotostockApp {
         LightboxManagment lightboxManagment = new LightboxManagment(clientRepository, lightBoxRepository,
                 productRepository, reservationRepository);
         AuthenticationManager authenticationManager = new AuthenticationManager(clientRepository);
-        LightBoxManagmentScreen lightBoxManagmentScreen = new LightBoxManagmentScreen(scanner, lightboxManagment, authenticationManager);
+        LightboxPresenter lightboxPresenter = new LightboxPresenter();
+        LightBoxManagmentScreen lightBoxManagmentScreen = new LightBoxManagmentScreen(scanner, lightboxManagment,
+                authenticationManager, lightBoxRepository, lightboxPresenter);
         ProductCatalog productCatalog = new ProductCatalog(productRepository);
-        SearchScreen searchScreen = new SearchScreen(scanner, authenticationManager, productCatalog);
+        SearchScreen searchScreen = new SearchScreen(scanner, authenticationManager, productCatalog, lightBoxRepository, lightboxManagment);
         MainScreen mainScreen = new MainScreen(scanner, lightBoxManagmentScreen, searchScreen);
         AuthenticatiionScreen authenticatiionScreen = new AuthenticatiionScreen(authenticationManager, scanner);
 

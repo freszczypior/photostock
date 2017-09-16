@@ -5,12 +5,13 @@ public class VIPClient extends Client {
 
     private Money creditLimit;
 
-    public VIPClient(String name, Address address, Money balance, Money creditLimit) {
-        super(name, address, ClientStatus.VIP, balance);
+    public VIPClient(String name, Address address, ClientStatus status, Money balance, Money creditLimit) {
+        super(name, address, status, balance);
         this.creditLimit = creditLimit;
     }
+
     public VIPClient(String name, Address address) {
-        super(name, address);
+        this(name, address, ClientStatus.VIP, Money.ZERO, Money.ZERO);
     }
 
 

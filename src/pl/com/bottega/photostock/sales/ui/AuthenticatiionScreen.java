@@ -2,14 +2,15 @@ package pl.com.bottega.photostock.sales.ui;
 
 import java.util.Scanner;
 
-public class AuthenticatiionScreen {
+public class AuthenticatiionScreen{
 
-private AuthenticationManager authenticationManager;
-private Scanner scanner;
+    private Scanner scanner;
+    private AuthenticationManager authenticationManager;
 
     public AuthenticatiionScreen(AuthenticationManager authenticationManager, Scanner scanner) {
-        this.authenticationManager = authenticationManager;
         this.scanner = scanner;
+        this.authenticationManager = authenticationManager;
+
     }
 
     public void show(){

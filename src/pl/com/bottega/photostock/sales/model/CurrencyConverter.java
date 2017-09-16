@@ -1,31 +1,29 @@
 package pl.com.bottega.photostock.sales.model;
 
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Map;
 
-public class CurrencyConventer {
+public class CurrencyConverter {
 
     private String mainCurrency;
     private Map<String, Double> exchangeRates;      // mapa kursów walut
     private final Integer ONE_UNIT = 1;
 
-    public CurrencyConventer(String mainCurrency, Map<String, Double> exchangeRates) {
+    public CurrencyConverter(String mainCurrency, Map<String, Double> exchangeRates) {
         this.mainCurrency = mainCurrency;
         this.exchangeRates = exchangeRates;
     }
 
     public Money convert(Money amount) {   //konwertuje kwotę na walutę główną i zwraca ją w nowym obiekcie Money
-        if (amount.currancy().equals(mainCurrency))
+        if (amount.currency().equals(mainCurrency))
             return amount;
-        return  amount.convert(mainCurrency, exRate(amount.currancy()));
+        return  amount.convert(mainCurrency, exRate(amount.currency()));
     }
 
     public Money convert(Money amount, String targetCurrency) {   //konwertuję na dowolną walutę i zwraca ją w nowym obiekcie
         if (targetCurrency.equals(mainCurrency))
                 return convert(amount);
-        if (amount.currancy().equals(mainCurrency))
+        if (amount.currency().equals(mainCurrency))
             return amount.convert(targetCurrency, 1/exRate(targetCurrency));
         return convert(convert(amount), targetCurrency);
     }

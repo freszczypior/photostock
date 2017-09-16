@@ -42,6 +42,12 @@ public class LightboxManagment {
         lightBoxRepository.save(lightBox);
     }
 
+    public void remove(String lightboxNumber, Long productNumber){
+        LightBox lightBox = lightBoxRepository.get(lightboxNumber);
+        lightBox.remove((Picture) productRepository.get(productNumber));
+        lightBoxRepository.save(lightBox);
+    }
+
     public void reserve(String lightboxNumber, Set<Long> pictureNumbers, String reservationNumber) {
         LightBox lightBox = lightBoxRepository.get(lightboxNumber);
         Reservation reservation = reservationRepository.get(reservationNumber);
@@ -61,4 +67,9 @@ public class LightboxManagment {
     public List<LightBox> getLightBoxes(String clientNumber) {
         return lightBoxRepository.getClientLightBoxes(clientNumber);
     }
+
+    public LightBox getLightBox(String lightBoxNumber){
+        return lightBoxRepository.get(lightBoxNumber);
+    }
+
 }

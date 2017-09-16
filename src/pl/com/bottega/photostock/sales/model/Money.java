@@ -1,14 +1,12 @@
 package pl.com.bottega.photostock.sales.model;
 
 
-import java.math.BigDecimal;
-
 public class Money implements Comparable<Money> {   // ta klasa jest tak skonstruowana, że jest immutable, żadna z metod w tej klasie nie zmienia stanu obiektu, warto do tego dążyć, bo taki kod jest łatwiej anlizować, kod wywołany wiele razy nie zmiania obiektów, zawsze powienien dać ten sam wynik
 
     public static final String DEFAULT_CURRENCY = "CREDIT";
     public static final Money ZERO = new Money();
 
-    private Long cents;     // jako ilość np: centów, groszy lub naszych kredytów
+    private Long cents;
     private String currency;
 
     private Money() {   // prywatny konstruktor, będzie mógł być wywołany tylko w tej klasie
@@ -32,6 +30,9 @@ public class Money implements Comparable<Money> {   // ta klasa jest tak skonstr
     public static Money valueOf(Double value) {     // valueOf utworzone na potrzeby obługi doubla, koniecznośc wynikająca z zastosowania rabatów dla pewnyc h statusów klienta
         return new Money((long) (value * 100.0), DEFAULT_CURRENCY);
     }
+    public static Money valueOf(Double value, String currency) {
+        return new Money((long) (value * 100.0), currency);
+    }
 
     public Money add(Money other) {
         checkCurrency(other);
@@ -52,16 +53,8 @@ public class Money implements Comparable<Money> {   // ta klasa jest tak skonstr
     }
 
 
-    public String currancy() {
+    public String currency() {
         return currency;
-    }
-
-    public static String getDefaultCurrency() {
-        return DEFAULT_CURRENCY;
-    }
-
-    public Long getCents() {
-        return cents;
     }
 
     private void checkCurrency(Money other) {
@@ -96,13 +89,13 @@ public class Money implements Comparable<Money> {   // ta klasa jest tak skonstr
     }
 
 //    public Money convert(String targetCurrancy, Double exRate) {    //moja wersja
-//        if (this.currancy().equals(targetCurrancy))
+//        if (this.currency().equals(targetCurrancy))
 //            return this;
 //        return new Money(BigDecimal.valueOf(this.getCents()).multiply(BigDecimal.valueOf(exRate)).longValue(), targetCurrancy);
 //    }
 
     public Money convert(String targetCurrancy, Double exRate) {
-        return new Money((long) (cents * exRate), targetCurrancy);   // zrzutowanie na lnga spowoduję zrzutowanie w dół na podłogę
+        return new Money(Math.round (cents * exRate), targetCurrancy);   // zrzutowanie na lnga spowoduję zrzutowanie w dół na podłogę
     }
 
     @Override

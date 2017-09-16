@@ -8,7 +8,6 @@ public class MainScreen {
     private SearchScreen searchScreen;
     private Scanner scanner;
 
-
     public MainScreen(Scanner scanner, LightBoxManagmentScreen lightBoxManagmentScreen, SearchScreen searchScreen) {
         this.lightBoxManagmentScreen = lightBoxManagmentScreen;
         this.searchScreen = searchScreen;
@@ -37,7 +36,7 @@ public class MainScreen {
     }
 
     private void showMenu() {
-        System.out.println("!!!Witamy w PHOTOSTOCK!!!");
+        System.out.println("\n!!!Witamy w PHOTOSTOCK!!!");
         System.out.println("1. Wyszukaj produkty.");
         System.out.println("2. Lajt boksy.");
         System.out.println("3. Zakończ.");
