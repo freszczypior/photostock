@@ -113,4 +113,8 @@ public class Money implements Comparable<Money> {   // ta klasa jest tak skonstr
         result = 31 * result + currency.hashCode();
         return result;
     }
+
+    public Money abs() {
+        return new Money(Math.abs(cents), currency);
+    }
 }

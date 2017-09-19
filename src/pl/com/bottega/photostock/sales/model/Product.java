@@ -1,5 +1,6 @@
 package pl.com.bottega.photostock.sales.model;
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import pl.com.bottega.photostock.sales.model.exceptions.ProductNotAvailableException;
 
 public interface Product {
@@ -22,4 +23,11 @@ public interface Product {
         if (!isAvailable())
             throw  new ProductNotAvailableException(this);
     }
+
+    Money getPrice();
+
+    boolean getActive();
+
+    Client getClient();
+
 }

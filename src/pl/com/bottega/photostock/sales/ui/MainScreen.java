@@ -4,42 +4,22 @@ import java.util.Scanner;
 
 public class MainScreen {
 
-    private LightBoxManagmentScreen lightBoxManagmentScreen;
+    private LightBoxManagementScreen lightBoxManagementScreen;
     private SearchScreen searchScreen;
     private Scanner scanner;
 
-    public MainScreen(Scanner scanner, LightBoxManagmentScreen lightBoxManagmentScreen, SearchScreen searchScreen) {
-        this.lightBoxManagmentScreen = lightBoxManagmentScreen;
+    public MainScreen(Scanner scanner, LightBoxManagementScreen lightBoxManagementScreen, SearchScreen searchScreen) {
+        this.lightBoxManagementScreen = lightBoxManagementScreen;
         this.searchScreen = searchScreen;
         this.scanner = scanner;
     }
 
     public void show(){
-        while(true) {
-            showMenu();
-            int decission = scanner.nextInt();
-            scanner.nextLine();
-            switch (decission) {
-                case 1:
-                    searchScreen.show();
-                    break;
-                case 2:
-                    lightBoxManagmentScreen.show();
-                    break;
-                case 3:
-                    return;
-                default:
-                    System.out.println("Sorry, ale nie rozumiem!!!");
-            }
-        }
-
-    }
-
-    private void showMenu() {
-        System.out.println("\n!!!Witamy w PHOTOSTOCK!!!");
-        System.out.println("1. Wyszukaj produkty.");
-        System.out.println("2. Lajt boksy.");
-        System.out.println("3. Zakończ.");
-        System.out.print("Co chcesz zrobić? ");
+        Menu menu = new Menu(scanner);
+        menu.setTitleLabel("!!!Witamy w PHOTOSTOCK!!!");
+        menu.addItem("Wyszukaj produkty", () -> searchScreen.show());
+        menu.addItem("Lajt boksy", () -> lightBoxManagementScreen.show());
+        menu.setLastItemLabel("Zakończ");
+        menu.show();
     }
 }

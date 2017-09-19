@@ -20,7 +20,7 @@ public class ConsoleApp {
 //        Product product4 = repository.get(4L);
 //        Product product5 = repository.get(5L);
 //
-//        LightboxPresenter lightboxPresenter = new LightboxPresenter();
+//        LightBoxPresenter lightboxPresenter = new LightBoxPresenter();
 //
 //        //CLIENT
 //
@@ -34,7 +34,7 @@ public class ConsoleApp {
 //        lightBox.add(product2);
 //        lightBox.add(product3);
 //
-//        lightboxPresenter.showLightbox(lightBox);
+//        lightboxPresenter.show(lightBox);
 //
 //        reservation.add(product1);
 //        reservation.add(product2);
@@ -62,7 +62,7 @@ public class ConsoleApp {
 //        vipLightBox.add(product4);
 //        vipLightBox.add(product5);
 //
-//        lightboxPresenter.showLightbox(vipLightBox);
+//        lightboxPresenter.show(vipLightBox);
 //
 //        vipReservation.add(product4);
 //        vipReservation.add(product5);

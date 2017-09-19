@@ -10,15 +10,15 @@ import pl.com.bottega.photostock.sales.model.repositories.ReservationRepository;
 import java.util.List;
 import java.util.Set;
 
-public class LightboxManagment {
+public class LightBoxManagement {
 
     private ClientRepository clientRepository;
     private LightBoxRepository lightBoxRepository;
     private ProductRepository productRepository;
     private ReservationRepository reservationRepository;
 
-    public LightboxManagment(ClientRepository clientRepository, LightBoxRepository lightBoxRepository, ProductRepository productRepository,
-                             ReservationRepository reservationRepository) {
+    public LightBoxManagement(LightBoxRepository lightBoxRepository, ClientRepository clientRepository, ProductRepository productRepository,
+                              ReservationRepository reservationRepository) {
         this.clientRepository = clientRepository;
         this.lightBoxRepository = lightBoxRepository;
         this.productRepository = productRepository;

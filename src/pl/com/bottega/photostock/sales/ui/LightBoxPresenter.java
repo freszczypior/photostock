@@ -4,9 +4,9 @@ import pl.com.bottega.photostock.sales.model.Client;
 import pl.com.bottega.photostock.sales.model.LightBox;
 import pl.com.bottega.photostock.sales.model.Product;
 
-public class LightboxPresenter {
+public class LightBoxPresenter {
 
-    public void showLightbox(LightBox lightBox){
+    public void show(LightBox lightBox){
         System.out.println(String.format("Nazwa: %s", lightBox.getName()));
         System.out.println("-------------------------------");
         int index = 0;

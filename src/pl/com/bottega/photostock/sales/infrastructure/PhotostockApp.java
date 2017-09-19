@@ -1,15 +1,10 @@
 package pl.com.bottega.photostock.sales.infrastructure;
 
-import pl.com.bottega.photostock.sales.application.LightboxManagment;
+import pl.com.bottega.photostock.sales.application.LightBoxManagement;
 import pl.com.bottega.photostock.sales.application.ProductCatalog;
-import pl.com.bottega.photostock.sales.infrastructure.repositories.InMemoryClientRepository;
-import pl.com.bottega.photostock.sales.infrastructure.repositories.InMemoryLightBoxRepository;
-import pl.com.bottega.photostock.sales.infrastructure.repositories.InMemoryProductRepository;
-import pl.com.bottega.photostock.sales.infrastructure.repositories.InMemoryReservationRepository;
-import pl.com.bottega.photostock.sales.model.repositories.ClientRepository;
-import pl.com.bottega.photostock.sales.model.repositories.LightBoxRepository;
-import pl.com.bottega.photostock.sales.model.repositories.ProductRepository;
-import pl.com.bottega.photostock.sales.model.repositories.ReservationRepository;
+import pl.com.bottega.photostock.sales.application.PurchaseProcess;
+import pl.com.bottega.photostock.sales.infrastructure.repositories.*;
+import pl.com.bottega.photostock.sales.model.repositories.*;
 import pl.com.bottega.photostock.sales.ui.*;
 
 import java.util.Scanner;
@@ -22,23 +17,27 @@ public class PhotostockApp {
         new PhotostockApp().start();
     }
 
-    public void start(){
-        ReservationRepository reservationRepository = new InMemoryReservationRepository();
-        ProductRepository productRepository = new InMemoryProductRepository();
-        ClientRepository clientRepository = new InMemoryClientRepository();
+    public void start() {
+        Scanner scanner = new Scanner(System.in);
         LightBoxRepository lightBoxRepository = new InMemoryLightBoxRepository();
-        LightboxManagment lightboxManagment = new LightboxManagment(clientRepository, lightBoxRepository,
+        ClientRepository clientRepository = new InMemoryClientRepository();
+        ProductRepository productRepository = new InMemoryProductRepository();
+        ReservationRepository reservationRepository = new InMemoryReservationRepository();
+        PurchaseRepository purchaseRepository = new InMemoryPurchaseRepository();
+        LightBoxManagement lightBoxManagement = new LightBoxManagement(lightBoxRepository, clientRepository,
                 productRepository, reservationRepository);
         AuthenticationManager authenticationManager = new AuthenticationManager(clientRepository);
-        LightboxPresenter lightboxPresenter = new LightboxPresenter();
-        LightBoxManagmentScreen lightBoxManagmentScreen = new LightBoxManagmentScreen(scanner, lightboxManagment,
-                authenticationManager, lightBoxRepository, lightboxPresenter);
+        AddProductToLightBoxScreen addProductToLightBoxScreen = new AddProductToLightBoxScreen(lightBoxManagement, scanner);
+        PurchaseProcess purchaseProcess = new PurchaseProcess(clientRepository, reservationRepository, productRepository, purchaseRepository);
+        PurchaseLightBoxScreen purchaseLightBoxScreen = new PurchaseLightBoxScreen(lightBoxManagement, purchaseProcess, scanner);
+        LightBoxManagementScreen lightBoxManagementScreen = new LightBoxManagementScreen(scanner, lightBoxManagement,
+                authenticationManager, addProductToLightBoxScreen, purchaseLightBoxScreen);
         ProductCatalog productCatalog = new ProductCatalog(productRepository);
-        SearchScreen searchScreen = new SearchScreen(scanner, authenticationManager, productCatalog, lightBoxRepository, lightboxManagment);
-        MainScreen mainScreen = new MainScreen(scanner, lightBoxManagmentScreen, searchScreen);
-        AuthenticatiionScreen authenticatiionScreen = new AuthenticatiionScreen(authenticationManager, scanner);
+        SearchScreen searchScreen = new SearchScreen(scanner, authenticationManager, productCatalog);
+        MainScreen mainScreen = new MainScreen(scanner, lightBoxManagementScreen, searchScreen);
+        AuthenticationScreen authenticationScreen = new AuthenticationScreen(scanner, authenticationManager);
 
-        authenticatiionScreen.show();
+        authenticationScreen.show();
         mainScreen.show();
     }
 

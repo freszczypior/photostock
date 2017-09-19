@@ -17,7 +17,16 @@ public abstract class AbstractProduct implements Product {
         this.price = price;
         this.active = active;
     }
+    //number, price, reservedBy, owner, active
 
+    public AbstractProduct(Long number, Money price, Client reservedBy, Client owner, boolean active){ //nowy konst na potrzebę CSV
+        this.number = number;
+        this.price = price;
+        this.reservedBy = reservedBy;
+        this.owner = owner;
+        this.active = active;
+
+    }
     public AbstractProduct(Long number, Money price) {
         this(number, price, true);
     }
@@ -79,4 +88,18 @@ public abstract class AbstractProduct implements Product {
         return number.hashCode();
     }
 
+    @Override
+    public Money getPrice() {
+        return null;
+    }
+
+    @Override
+    public boolean getActive() {
+        return false;
+    }
+
+    @Override
+    public Client getClient() {
+        return null;
+    }
 }

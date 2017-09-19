@@ -21,7 +21,7 @@ public class Offer {
     }
 
     public boolean sameAs(Offer offer, Money money) {
-        return false;
+        return getTotalCost().subTract(offer.getTotalCost()).abs().lte(money);
     }
 
     public int getItemCount() {

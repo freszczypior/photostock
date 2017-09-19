@@ -21,7 +21,7 @@ public class Menu {
             showTitle();
             showItems();
             showLastItem();
-            int decision = getUserDecision();
+            int decision = getUserDecisionDigit();
             if (wantsToQuit(decision))
                 return;
             processAction(decision);
@@ -54,7 +54,7 @@ public class Menu {
         System.out.println(String.format("%d. %s", items.size() + 1, lastItemLabel));
     }
 
-    private int getUserDecision() {
+    private int getUserDecisionDigit() {
         System.out.print("Co checesz zrobić? ");
         String userInput = scanner.nextLine();
         try {
@@ -62,6 +62,22 @@ public class Menu {
         } catch (NumberFormatException nfe) {
             return -1;
         }
+    }
+
+    public int getUserDecisionDigit(String textToShow) {
+        System.out.print(textToShow);
+        String userInput = scanner.nextLine();
+        try {
+            return Integer.parseInt(userInput);
+        } catch (NumberFormatException nfe) {
+            return -1;
+        }
+    }
+
+    public String getUserDecisionWord(String textToShow) {
+        System.out.print(textToShow);
+        String userInput = scanner.nextLine();
+        return userInput;
     }
 
     public void setLastItemLabel(String label) {

@@ -1,5 +1,6 @@
 package pl.com.bottega.photostock.sales.model;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,11 @@ public class Picture extends AbstractProduct{
         this(number, tags, price, true);
     }
 
+    public Picture(Long number, String[] tags, Money price, Client reservedBy, Client owner, boolean active) { //na potrzeby CSV
+        super(number, price, reservedBy, owner, active);
+        this.tags = new HashSet<>(Arrays.asList(tags));
+    }
+
     public Set<String> getTags() {
         return tags;
     }
@@ -25,6 +31,4 @@ public class Picture extends AbstractProduct{
 
         return this.tags.containsAll(tags);
     }
-
-
 }
