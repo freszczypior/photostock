@@ -90,16 +90,21 @@ public abstract class AbstractProduct implements Product {
 
     @Override
     public Money getPrice() {
-        return null;
+        return price;
     }
 
     @Override
     public boolean getActive() {
-        return false;
+        return active;
     }
 
     @Override
-    public Client getClient() {
-        return null;
+    public Client getReservedBy() {
+        return reservedBy;
+    }
+
+    @Override
+    public Client getOwner() {
+        return owner;
     }
 }

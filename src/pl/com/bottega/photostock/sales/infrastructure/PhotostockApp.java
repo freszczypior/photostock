@@ -21,7 +21,9 @@ public class PhotostockApp {
         Scanner scanner = new Scanner(System.in);
         LightBoxRepository lightBoxRepository = new InMemoryLightBoxRepository();
         ClientRepository clientRepository = new InMemoryClientRepository();
-        ProductRepository productRepository = new InMemoryProductRepository();
+        ProductRepository productRepository = new CSVProductRepository(
+                "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv",
+                new InMemoryClientRepository());
         ReservationRepository reservationRepository = new InMemoryReservationRepository();
         PurchaseRepository purchaseRepository = new InMemoryPurchaseRepository();
         LightBoxManagement lightBoxManagement = new LightBoxManagement(lightBoxRepository, clientRepository,

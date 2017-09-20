@@ -28,6 +28,8 @@ public interface Product {
 
     boolean getActive();
 
-    Client getClient();
+    Client getReservedBy();
+
+    Client getOwner();
 
 }

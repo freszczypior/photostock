@@ -7,8 +7,6 @@ public class LightBox {     // przechowuję tylko Picture
     private String name;
     private Client owner;
     private List<Picture> items = new LinkedList<>();       //lista, a nie kolekcja bo to sugeruję, że ważna jest kolejnośc dodawania, np dla przyszłego wyświetlania
-
-
     private String number;
 
     public LightBox(Client owner, String name) {
@@ -16,6 +14,7 @@ public class LightBox {     // przechowuję tylko Picture
         this.name = name;
         this.number = UUID.randomUUID().toString();
     }
+
 
     public void add(Picture picture){
         picture.ensureAvailable();

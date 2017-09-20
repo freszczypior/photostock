@@ -26,17 +26,31 @@ public class CSVProductRepositoryTest {
 
         Product product = new Picture(5L, tagsTab, Money.valueOf(10), null, null, true);
 
-        ProductRepository productRepository = new CSVProductRepository("D:/products.csv", new InMemoryClientRepository());
+        ProductRepository productRepository = new CSVProductRepository(
+                "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv",
+                new InMemoryClientRepository());
 
+        //test save()
+        productRepository.save(product);
 
-        Set<String> tag = new HashSet<>();
-        tag.add("pieski");
+        //test find()
+//        Set<String> tag = new HashSet<>();
+//        tag.add("ptaszki");
+//        List<Product> list = productRepository.find(client, tag, null, null);
+//        for (Product prod: list) {
+//            System.out.println(prod.getNumber());
+//        }
+//        System.out.println(list.size());
 
-        List<Product> list = productRepository.find(client, tag, null, null);
-        System.out.println(list.size());
-
-//        Product prod = productRepository.get(2L);
-//        System.out.println(prod.getNumber());
+        //test get()
+//        Product prod = productRepository.get(1L);
+//
+//        Picture picture = (Picture) prod;
+//        Set <String> set = picture.getTags();
+//        for (String tag: set) {
+//            System.out.println(tag);
+//        }
+        //System.out.println(prod.getNumber());
     }
 
 }

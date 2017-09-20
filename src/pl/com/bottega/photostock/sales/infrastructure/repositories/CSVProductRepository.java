@@ -15,7 +15,7 @@ import java.util.*;
 
 public class CSVProductRepository implements ProductRepository {
 
-    private String path;
+    private String path = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv";
     private ClientRepository clientRepository;
 
     public CSVProductRepository(String path, ClientRepository clientRepository) {
@@ -33,12 +33,6 @@ public class CSVProductRepository implements ProductRepository {
 //            throw new IllegalArgumentException("No such product in REPO");
     }
 
-    private Client findClient(String number) {
-        if (number.equals("null"))
-            return null;
-        else
-            return clientRepository.get(number);
-    }
 
 
     @Override
@@ -46,7 +40,7 @@ public class CSVProductRepository implements ProductRepository {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] lineSplit = line.split(",");
+                String[] lineSplit = line.split(";");
                 if (lineSplit[0].equals(number.toString())) {
                     return Optional.of(toProduct(lineSplit));
                 }
@@ -61,12 +55,19 @@ public class CSVProductRepository implements ProductRepository {
 
     private Product toProduct(String[] lineSplit) {
         Long nr = Long.parseLong(lineSplit[0]);
-        String[] tags = lineSplit[1].split(";");
+        String[] tags = lineSplit[1].split(",");
         Money price = Money.valueOf(Integer.parseInt(lineSplit[2]));
         boolean active = Boolean.valueOf(lineSplit[3]);
         String reservedNumber = lineSplit[4];
         String ownerNumber = lineSplit[5];
         return new Picture(nr, tags, price, findClient(reservedNumber), findClient(ownerNumber), active);
+    }
+
+    private Client findClient(String number) {
+        if (number.equals("null"))
+            return null;
+        else
+            return clientRepository.get(number);
     }
 
     @Override
@@ -76,7 +77,9 @@ public class CSVProductRepository implements ProductRepository {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                toMap(productsMap, line, ",");
+                String[] lineSplit = line.split(";");
+                Product tempProduct = toProduct(lineSplit);
+                productsMap.put(tempProduct.getNumber(), tempProduct);
             }
             productsMap.put(product.getNumber(), product);
         } catch (FileNotFoundException e) {
@@ -98,30 +101,27 @@ public class CSVProductRepository implements ProductRepository {
         }
     }
 
-    private void toMap(Map<Long, Product> map, String line, String regex) {
-        String[] lineSplit = line.split(regex);
-        Product tempProduct = toProduct(lineSplit);
-        map.put(tempProduct.getNumber(), tempProduct);
-    }
-
     private String toLine(Long number, Product product) {
-        //Long number = product.getNumber();
         Set<String> set = ((Picture) product).getTags();
         String[] tagsTab = set.toArray(new String[set.size()]);
-        Money price = product.getPrice();
+        String price = product.getPrice().toString();       //TODO zwraca np 10.0 CREDIT, do tej pory w pliku zapisywaliśmy price jako np 10
         Boolean active = product.getActive();
-        String clientNumber = product.getClient().getNumber();
-        String tags = toString(tagsTab);
-        return String.format("%d,%s,%s,%s,%s,%s", number, tags, price.toString(), active.toString(), clientNumber, clientNumber);
+        Client reservedClient = product.getReservedBy();
+        Client ownerClient = product.getOwner();
+        return String.format("%d;%s;%s;%s;%s;%s", number, toString(tagsTab), price, active.toString(), toNumber(reservedClient), toNumber(ownerClient));
+    }
+
+    private String toNumber(Client client) {
+        return client == null ? null : client.getNumber();
     }
 
     private String toString(String[] tags) {
-        StringBuffer sb = null;
-        if (tags.length > 0)
+        StringBuffer sb = new StringBuffer();
+        if (tags.length > 0) {
             sb.append(tags[0]);
-        if (tags.length > 1) {
-            for (String tag : tags) {
-                sb.insert(0, tag + ";");
+            if (tags.length > 1)
+            for (int i = 1; i < tags.length; i++){
+                sb.insert(0, tags[i] + ",");
             }
         }
         return sb.toString();
@@ -134,7 +134,7 @@ public class CSVProductRepository implements ProductRepository {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] lineSplit = line.split(",");
+                String[] lineSplit = line.split(";");
                 Product product = toProduct(lineSplit);
                 if (product instanceof Picture) {
                     Picture picture = (Picture) product;
