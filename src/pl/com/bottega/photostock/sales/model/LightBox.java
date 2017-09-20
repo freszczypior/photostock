@@ -15,6 +15,12 @@ public class LightBox {     // przechowuję tylko Picture
         this.number = UUID.randomUUID().toString();
     }
 
+    public LightBox(String number, String name, List<Picture> items, Client owner) {
+        this.number = number;
+        this.name = name;
+        this.items = items;
+    }
+
 
     public void add(Picture picture){
         picture.ensureAvailable();

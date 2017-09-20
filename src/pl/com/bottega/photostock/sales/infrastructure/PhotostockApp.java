@@ -19,11 +19,13 @@ public class PhotostockApp {
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
-        LightBoxRepository lightBoxRepository = new InMemoryLightBoxRepository();
         ClientRepository clientRepository = new InMemoryClientRepository();
         ProductRepository productRepository = new CSVProductRepository(
                 "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv",
-                new InMemoryClientRepository());
+                clientRepository);
+        LightBoxRepository lightBoxRepository = new CSVLightBoxRepository(
+                "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\lightboxes.csv",
+                productRepository, clientRepository);
         ReservationRepository reservationRepository = new InMemoryReservationRepository();
         PurchaseRepository purchaseRepository = new InMemoryPurchaseRepository();
         LightBoxManagement lightBoxManagement = new LightBoxManagement(lightBoxRepository, clientRepository,

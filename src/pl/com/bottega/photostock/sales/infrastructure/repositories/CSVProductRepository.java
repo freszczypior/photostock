@@ -15,7 +15,7 @@ import java.util.*;
 
 public class CSVProductRepository implements ProductRepository {
 
-    private String path = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv";
+    private String path;
     private ClientRepository clientRepository;
 
     public CSVProductRepository(String path, ClientRepository clientRepository) {
@@ -72,8 +72,26 @@ public class CSVProductRepository implements ProductRepository {
 
     @Override
     public void save(Product product) {
-        //read file and create map
         Map<Long, Product> productsMap = new HashMap<>();
+        toMap(path, productsMap);
+        productsMap.put(product.getNumber(), product);
+        toFile(path, productsMap, false);
+    }
+
+    private void toFile(String path, Map<Long, Product> productsMap, boolean append) {
+        try (OutputStream outputStream = new FileOutputStream(path, append);
+             PrintStream printStream = new PrintStream(outputStream)) {         // TODO flush, czy tutaj tego potrzebuję oraz co z kodowaniem
+            for (Map.Entry<Long, Product> entry : productsMap.entrySet()) {
+                printStream.println(toLine(entry.getKey(),entry.getValue()));
+            }
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("No such object in repository");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void toMap(String path, Map<Long, Product> productsMap) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -81,23 +99,10 @@ public class CSVProductRepository implements ProductRepository {
                 Product tempProduct = toProduct(lineSplit);
                 productsMap.put(tempProduct.getNumber(), tempProduct);
             }
-            productsMap.put(product.getNumber(), product);
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("No such object in repository");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-
-        //download from map and write to file
-        try (OutputStream outputStream = new FileOutputStream(path, false);
-             PrintStream printStream = new PrintStream(outputStream)) {         // TODO zapytać Maćka o flush, czy tutaj tego potrzebuję oraz kodowanie
-            for (Map.Entry<Long, Product> entry : productsMap.entrySet()) {
-                printStream.println(toLine(entry.getKey(),entry.getValue()));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -115,7 +120,7 @@ public class CSVProductRepository implements ProductRepository {
         return client == null ? null : client.getNumber();
     }
 
-    private String toString(String[] tags) {
+    private String toString(String[] tags) {        //TODO do nadklasy
         StringBuffer sb = new StringBuffer();
         if (tags.length > 0) {
             sb.append(tags[0]);
