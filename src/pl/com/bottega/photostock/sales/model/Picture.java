@@ -18,8 +18,8 @@ public class Picture extends AbstractProduct{
         this(number, tags, price, true);
     }
 
-    public Picture(Long number, String[] tags, Money price, Client reservedBy, Client owner, boolean active) { //na potrzeby CSV
-        super(number, price, reservedBy, owner, active);
+    public Picture(Long number, String[] tags, Money price, Client reservedBy, Client owner, boolean active, Brand brand) { //na potrzeby CSV
+        super(number, price, reservedBy, owner, active, brand);
         this.tags = new HashSet<>(Arrays.asList(tags));
     }
 

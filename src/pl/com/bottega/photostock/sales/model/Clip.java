@@ -1,5 +1,8 @@
 package pl.com.bottega.photostock.sales.model;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class Clip extends AbstractProduct {
 
     private Long lenght;
@@ -11,6 +14,15 @@ public class Clip extends AbstractProduct {
 
     public Clip(Long number, Long lenght, Money price) {    // jak mamy klika konstruktorów to mogę używaćdnego w drugim, po to aby nie duplikować konstruktorów
         this(number, lenght, price, true);
+    }
+
+    public Clip(Long number, Long lenght, Money price, Client reservedBy, Client owner, boolean active, Brand brand) { //na potrzeby CSV
+        super(number, price, reservedBy, owner, active, brand);
+        this.lenght = lenght;
+    }
+
+    public Long getLenght() {
+        return lenght;
     }
 }
 

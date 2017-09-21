@@ -25,6 +25,18 @@ public abstract class Client {
         this(name, address, ClientStatus.STANDARD, Money.ZERO);
     }
 
+    public Client(String number, String name, Address address, ClientStatus status, List<Transaction> transactions){
+        this.number = number;
+        this.name = name;
+        this.address = address;
+        this.status = status;
+        this.transactions = transactions;
+    }
+
+    public Client(String number, String name, Address address, ClientStatus status, List<Transaction> transactions, Money creditLimit){
+        this(number, name, address, status, transactions);
+    }
+
     public abstract boolean canAfford(Money amount);
 
 
@@ -56,7 +68,19 @@ public abstract class Client {
         return number;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean hasLogin(String login) {
         return name.equals(login);
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }

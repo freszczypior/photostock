@@ -31,10 +31,10 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         Map<String,LightBox> lightBoxMap = new HashMap<>();
         toMap(path, lightBoxMap);
         lightBoxMap.put(lightBox.getNumber(), lightBox);
-        toFile(path, lightBoxMap, false);
+        toFile(lightBoxMap, path, false);
     }
     
-    private void toFile(String path, Map<String,LightBox> map, boolean append){
+    private void toFile(Map<String,LightBox> map, String path, boolean append){
         try (OutputStream outputStream = new FileOutputStream(path, append)){
             PrintStream printStream = new PrintStream(outputStream);
             for (Map.Entry<String,LightBox> entry: map.entrySet()){

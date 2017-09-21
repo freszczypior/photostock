@@ -16,4 +16,24 @@ public class Address {
     public Address(String line1, String country, String city, String postalCode) {
     this(line1, null, country, city, postalCode);
     }
+
+    public String getLine1() {
+        return line1;
+    }
+
+    public String getLine2() {
+        return line2;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
 }

@@ -7,6 +7,7 @@ public abstract class AbstractProduct implements Product {
     protected Long number;
     protected Money price;
     protected Boolean active;     //flaga mówiąca o tym czy zdjęcie jest dostępne do handlu
+    private Brand brand;
     private Client reservedBy;
     private Client owner;      //wskazuję kto ewentualnie razererwował produkt, kto kupił
     //zaimplementować metody
@@ -19,13 +20,13 @@ public abstract class AbstractProduct implements Product {
     }
     //number, price, reservedBy, owner, active
 
-    public AbstractProduct(Long number, Money price, Client reservedBy, Client owner, boolean active){ //nowy konst na potrzebę CSV
+    public AbstractProduct(Long number, Money price, Client reservedBy, Client owner, boolean active, Brand brand){ //nowy konst na potrzebę CSV
         this.number = number;
         this.price = price;
         this.reservedBy = reservedBy;
         this.owner = owner;
         this.active = active;
-
+        this.brand = brand;
     }
     public AbstractProduct(Long number, Money price) {
         this(number, price, true);
@@ -106,5 +107,10 @@ public abstract class AbstractProduct implements Product {
     @Override
     public Client getOwner() {
         return owner;
+    }
+
+    @Override
+    public Brand getBrand() {
+        return brand;
     }
 }

@@ -32,4 +32,5 @@ public interface Product {
 
     Client getOwner();
 
+    Brand getBrand();
 }

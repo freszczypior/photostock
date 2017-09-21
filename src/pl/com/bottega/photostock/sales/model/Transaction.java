@@ -13,7 +13,21 @@ public class Transaction {  // dodatkowa klasa, jej chyba nie ma w opisie
         this.description = description;
     }
 
+    public Transaction(Money amount, String description, LocalDateTime dateTime){   // konst na potrzeby csv
+        this.amount = amount;
+        this.description = description;
+        this.dateTime = dateTime;
+    }
+
     public Money getAmount() {
         return amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 }
