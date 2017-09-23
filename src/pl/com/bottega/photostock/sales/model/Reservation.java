@@ -8,14 +8,18 @@ import java.util.UUID;
 public class Reservation {
 
     private Client owner;
-
-
     private Set<Product> items = new LinkedHashSet<>();
     private String number;
 
     public Reservation(Client owner) {
         this.owner = owner;
         this.number = UUID.randomUUID().toString();     // generowanie losowego ciągu cyfr i liter, chyba 16 znaków
+    }
+
+    public Reservation(String number, Client owner, Set<Product> items) {
+        this.owner = owner;
+        this.items = items;
+        this.number = number;
     }
 
     public void add(Product product) {

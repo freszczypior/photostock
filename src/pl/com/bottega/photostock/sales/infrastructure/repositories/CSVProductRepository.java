@@ -1,11 +1,9 @@
 package pl.com.bottega.photostock.sales.infrastructure.repositories;
 
-import org.omg.CORBA.portable.*;
 import pl.com.bottega.photostock.sales.model.*;
 import pl.com.bottega.photostock.sales.model.repositories.ClientRepository;
 import pl.com.bottega.photostock.sales.model.repositories.ProductRepository;
 
-import javax.imageio.IIOException;
 import java.io.*;
 import java.io.OutputStream;
 import java.util.*;
@@ -80,10 +78,10 @@ public class CSVProductRepository implements ProductRepository {
         Map<Long, Product> productsMap = new HashMap<>();
         toMap(path, productsMap);
         productsMap.put(product.getNumber(), product);
-        toFile(path, productsMap, false);
+        toFile(productsMap, path, false);
     }
 
-    private void toFile(String path, Map<Long, Product> productsMap, boolean append) {
+    private void toFile(Map<Long, Product> productsMap, String path, boolean append) {
         try (OutputStream outputStream = new FileOutputStream(path, append);
              PrintStream printStream = new PrintStream(outputStream)) {         // TODO flush, czy tutaj tego potrzebuję oraz co z kodowaniem
             for (Map.Entry<Long, Product> entry : productsMap.entrySet()) {

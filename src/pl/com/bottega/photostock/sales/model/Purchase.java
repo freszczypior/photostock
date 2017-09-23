@@ -29,7 +29,26 @@ public class Purchase {
         this.number = UUID.randomUUID().toString();
     }
 
+    public Purchase(String number, Client buyer, List<Product> items, LocalDateTime purchaseDate) {
+        this.purchaseDate = purchaseDate;
+        this.buyer = buyer;
+        this.items = items;
+        this.number = number;
+    }
+
     public String getNumber() {
         return number;
+    }
+
+    public LocalDateTime getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public Client getBuyer() {
+        return buyer;
+    }
+
+    public List<Product> getItems() {
+        return items;
     }
 }

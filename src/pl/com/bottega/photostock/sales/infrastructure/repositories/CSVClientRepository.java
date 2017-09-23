@@ -9,8 +9,11 @@ import java.util.*;
 
 public class CSVClientRepository implements ClientRepository {
 
-    private static String path;
+    private String path;
 
+    public CSVClientRepository(String path) {
+        this.path = path;
+    }
 
     @Override
     public Client get(String clientNumber) {
@@ -149,12 +152,7 @@ public class CSVClientRepository implements ClientRepository {
             for (Transaction trans: transList) {
                 String amount = trans.getAmount().toString();
                 String description = trans.getDescription();
-                Integer year = trans.getDateTime().getYear();
-                Integer month = trans.getDateTime().getMonth().getValue();
-                Integer day = trans.getDateTime().getDayOfMonth();
-                Integer hour = trans.getDateTime().getHour();
-                Integer minute = trans.getDateTime().getMinute();
-                String line = String.format("%s;%s;%d;%d;%d;%d;%d", amount, description, year, month, day, hour, minute);
+                String line = String.format("%s;%s;%s", amount, description, localDateTimeToString(trans.getDateTime()));
                 ps.println(line);
             }
         } catch (FileNotFoundException e) {
@@ -162,6 +160,15 @@ public class CSVClientRepository implements ClientRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String localDateTimeToString (LocalDateTime localDateTime){
+        Integer year = localDateTime.getYear();
+        Integer month = localDateTime.getMonth().getValue();
+        Integer day = localDateTime.getDayOfMonth();
+        Integer hour = localDateTime.getHour();
+        Integer minute = localDateTime.getMinute();
+        return String.format("%d;%d;%d;%d;%d", year, month, day, hour, minute);
     }
     private void toMap(String path, Map<String, Client> map) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -180,8 +187,18 @@ public class CSVClientRepository implements ClientRepository {
 
     @Override
     public Optional<Client> getByLogin(String login) {  // box dla klienta
-        Optional<Client> optional;
-
-        return null;
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] lineSplit = line.split(";");
+                if (lineSplit[1].equals(login))
+                    return Optional.of(toClient(lineSplit));
+            }
+            throw new IllegalArgumentException("No such object in repository");
+        } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("No such object in repository");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -12,6 +12,11 @@ import java.util.Scanner;
 public class PhotostockApp {
 
     private Scanner scanner = new Scanner(System.in);
+    private final String PROD_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv";
+    private final String LIGHTBOX_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\lightboxes.csv";
+    private final String PURCHES_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\purchases.csv";
+    private final String CLIENT_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\clients.csv";
+    private final String RESERV_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\reservations.csv";
 
     public static void main(String[] args) {
         new PhotostockApp().start();
@@ -19,15 +24,16 @@ public class PhotostockApp {
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
-        ClientRepository clientRepository = new InMemoryClientRepository();
+        ClientRepository clientRepository = new CSVClientRepository(
+                CLIENT_REPO_PATH);
         ProductRepository productRepository = new CSVProductRepository(
-                "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv",
-                clientRepository);
+                PROD_REPO_PATH, clientRepository);
         LightBoxRepository lightBoxRepository = new CSVLightBoxRepository(
-                "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\lightboxes.csv",
-                productRepository, clientRepository);
-        ReservationRepository reservationRepository = new InMemoryReservationRepository();
-        PurchaseRepository purchaseRepository = new InMemoryPurchaseRepository();
+                LIGHTBOX_REPO_PATH, productRepository, clientRepository);
+        ReservationRepository reservationRepository = new CSVReservationRepository(
+                RESERV_REPO_PATH, productRepository, clientRepository);
+        PurchaseRepository purchaseRepository = new CSVPurchaseRepository(
+                PURCHES_REPO_PATH, clientRepository, productRepository);
         LightBoxManagement lightBoxManagement = new LightBoxManagement(lightBoxRepository, clientRepository,
                 productRepository, reservationRepository);
         AuthenticationManager authenticationManager = new AuthenticationManager(clientRepository);
