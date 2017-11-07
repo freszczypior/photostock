@@ -1,1 +1,4 @@
-# photostock-summer-2017-master - pierwszy większy projekt realizowany w ramach szkolenia Bottega 
+# Photostock
+
+Application which administrate seling pictures and and clips by webside.
+
