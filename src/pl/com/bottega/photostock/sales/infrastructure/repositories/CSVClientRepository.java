@@ -54,7 +54,7 @@ public class CSVClientRepository implements ClientRepository {
     private List<Transaction> toTransactionsList(String clientNumber) { //TODO a może oddzielne repo na trans?
         String clientTransPath = String.format("C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\%s-transactions.csv", clientNumber);
         List<Transaction> list = new LinkedList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(clientTransPath))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(clientTransPath)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineSplit = line.split(";");

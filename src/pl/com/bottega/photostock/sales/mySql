@@ -4,14 +4,14 @@
 # - narodowość
 # - datę urodzenia i śmierci
 
-CREATE TABLE authors(
-  id INT AUTO_INCREMENT,
-  firstname VARCHAR(50) NOT NULL,
-  lastname VARCHAR(50) NOT NULL,
-  nationality CHAR(2),
-  date_of_birth DATE NOT NULL,
+CREATE TABLE authors (
+  id            INT AUTO_INCREMENT,
+  firstname     VARCHAR(50) NOT NULL,
+  lastname      VARCHAR(50) NOT NULL,
+  nationality   CHAR(2),
+  date_of_birth DATE        NOT NULL,
   date_of_death DATE,
-    PRIMARY KEY (id)
+  PRIMARY KEY (id)
 );
 
 # 2. Wstaw autorów do w.w. tabeli.
@@ -24,56 +24,72 @@ CREATE TABLE authors(
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
 VALUES ('Adam', 'Mickiewicz', 'PL', '1798-12-24', '1855-11-26');
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Juliusz', 'Slowacki', 'PL', '1809-09-04','1849-04-03');
+VALUES ('Juliusz', 'Slowacki', 'PL', '1809-09-04', '1849-04-03');
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Boleslaw', 'Prus', 'PL', '1847-08-20','1912-05-19');
+VALUES ('Boleslaw', 'Prus', 'PL', '1847-08-20', '1912-05-19');
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Zygmunt', 'Krasinski', 'PL', '1812-02-19','1859-02-23');
+VALUES ('Zygmunt', 'Krasinski', 'PL', '1812-02-19', '1859-02-23');
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Henryk', 'Sienkiewicz', 'PL', '1846-05-05','1916-11-15');
+VALUES ('Henryk', 'Sienkiewicz', 'PL', '1846-05-05', '1916-11-15');
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Andrzej', 'Sapkowski', 'PL', '1948-06-21',null);
+VALUES ('Andrzej', 'Sapkowski', 'PL', '1948-06-21', NULL);
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Adam', 'Asnyk', 'PL', '1948-06-21',null);
+VALUES ('Adam', 'Asnyk', 'PL', '1948-06-21', NULL);
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('George', 'Byron', 'GB', '1948-06-21',null);
+VALUES ('George', 'Byron', 'GB', '1948-06-21', NULL);
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Honire', 'De Balsac', 'FR', '1948-06-21',null);
+VALUES ('Honire', 'De Balsac', 'FR', '1948-06-21', NULL);
 INSERT INTO authors (firstname, lastname, nationality, date_of_birth, date_of_death)
-VALUES ('Alexander', 'Dumas', 'FR', '1948-06-21',null);
+VALUES ('Alexander', 'Dumas', 'FR', '1948-06-21', NULL);
 
 # 3. Napisz zapytana do tabeli autorów wyświetlające:
 # a) wszystkich autorów
-SELECT * FROM  authors;
+SELECT *
+FROM authors;
 # b) autorów o imieniu Adam
-SELECT * FROM authors WHERE firstname LIKE 'Adam';
+SELECT *
+FROM authors
+WHERE firstname LIKE 'Adam';
 # c) autorów narodowści polskiej
-SELECT * FROM authors WHERE nationality LIKE 'PL';
+SELECT *
+FROM authors
+WHERE nationality LIKE 'PL';
 # d) żyjących autorów
-SELECT * FROM authors WHERE date_of_death IS NULL;
+SELECT *
+FROM authors
+WHERE date_of_death IS NULL;
 # e) nieżyjących autorów
-SELECT * FROM authors WHERE date_of_death IS NOT NULL;
+SELECT *
+FROM authors
+WHERE date_of_death IS NOT NULL;
 # f) autorów żyjących w wieku powyżej 50 lat
-SELECT * FROM authors
-WHERE date_of_death IS NOT NULL  AND DATEDIFF(current_date, date_of_birth) > 50 * 365;
+SELECT *
+FROM authors
+WHERE date_of_death IS NOT NULL AND DATEDIFF(current_date, date_of_birth) > 50 * 365;
 # g) autorów nieżyjących, którzy zmarli w wieku poniżej 40 lat
-SELECT * FROM authors
+SELECT *
+FROM authors
 WHERE date_of_death IS NOT NULL AND ABS(DATEDIFF(date_of_birth, date_of_death)) < 40 * 365;
 # h) wszystkich autorów sortowanych po nazwisku rosnąco
-SELECT * FROM authors
+SELECT *
+FROM authors
 ORDER BY lastname;
 # i) wszystkich autorów sortowanych po nazwisku i imieniu rosnąco
-SELECT * FROM authors
+SELECT *
+FROM authors
 ORDER BY lastname, firstname;
 # j) wszystkich autorów sortowanych po dacie śmierci malejąco, imieniu i nazwisku rosnąco
-SELECT * FROM authors
+SELECT *
+FROM authors
 ORDER BY date_of_death DESC, lastname, firstname;
 # k) tak jak w h ale tylko 2 pierwszych
-SELECT * FROM authors
+SELECT *
+FROM authors
 ORDER BY date_of_death DESC, lastname, firstname
 LIMIT 3;
 # l) tak jak w h ale tylko drugą stronę przy założeniu że mamy 2 autorów na stronę
-SELECT * FROM authors
+SELECT *
+FROM authors
 ORDER BY date_of_death DESC, lastname, firstname
 LIMIT 2, 2;
 
@@ -86,12 +102,12 @@ LIMIT 2, 2;
 # - miasto
 
 CREATE TABLE addresses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    street VARCHAR(255),
-    house_number VARCHAR(20) NOT NULL,
-    flat_number VARCHAR(20),
-    postal_code CHAR(6) NOT NULL,
-    city VARCHAR(50) NOT NULL
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  street       VARCHAR(255),
+  house_number VARCHAR(20) NOT NULL,
+  flat_number  VARCHAR(20),
+  postal_code  CHAR(6)     NOT NULL,
+  city         VARCHAR(50) NOT NULL
 );
 
 INSERT INTO addresses (street, house_number, flat_number, postal_code, city)
@@ -105,13 +121,13 @@ VALUES ('ul. Polnocna', '10', '10', '20-100', 'Lublin');
 # - identyfikator adresu (klucz obcy do tabeli klientów)
 
 CREATE TABLE clients (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    firstname VARCHAR(255) NOT NULL,
-    lastname VARCHAR(255) NOT NULL,
-    document_number VARCHAR(30) NOT NULL,
-    pesel CHAR(11) NOT NULL,
-    address_id INT NOT NULL,
-    FOREIGN KEY (address_id) REFERENCES addresses(id)
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  firstname       VARCHAR(255) NOT NULL,
+  lastname        VARCHAR(255) NOT NULL,
+  document_number VARCHAR(30)  NOT NULL,
+  pesel           CHAR(11)     NOT NULL,
+  address_id      INT          NOT NULL,
+  FOREIGN KEY (address_id) REFERENCES addresses (id)
 );
 
 INSERT INTO clients (firstname, lastname, document_number, pesel, address_id)
@@ -121,59 +137,72 @@ VALUES ('Janina', 'Nowak', '123456', '123456', 1);
 
 # 6. Napisz zapytania łączące tabele klientów i adresów, wyświetlające
 # a) wszystkich klientów i ich adresy
-SELECT * FROM clients c
-JOIN addresses a ON c.address_id = a.id;
+SELECT *
+FROM clients c
+  JOIN addresses a ON c.address_id = a.id;
 
 # b) wszystkich klientów i miasta ich zamieszkania
-SELECT concat(c.firstname,' ',c.lastname), a.city FROM clients c
-JOIN addresses a ON c.address_id = a.id;
+SELECT
+  concat(c.firstname, ' ', c.lastname),
+  a.city
+FROM clients c
+  JOIN addresses a ON c.address_id = a.id;
 
 # c) klientów, którzy mieszkają w Warszawi
-SELECT concat(c.firstname,' ',c.lastname), a.city FROM clients c
-    JOIN addresses a ON c.address_id = a.id
+SELECT
+  concat(c.firstname, ' ', c.lastname),
+  a.city
+FROM clients c
+  JOIN addresses a ON c.address_id = a.id
 WHERE a.city = 'lublin';
 
-SELECT concat(c.firstname,' ',c.lastname), a.city FROM clients c
-    JOIN addresses a ON c.address_id = a.id
+SELECT
+  concat(c.firstname, ' ', c.lastname),
+  a.city
+FROM clients c
+  JOIN addresses a ON c.address_id = a.id
 WHERE a.city LIKE 'lub%';
 
 # 7. Stwórz tabelę przechowującą gatunki literackie, wstaw kilka gatunków
 # - identyfikator
 # - nazwa gatuku
 
-CREATE TABLE genres (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50) NOT NULL);
+CREATE TABLE genres (
+  id   INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
+);
 
 INSERT INTO genres (name)
 VALUES ('audiobooki'),
-    ('biografie'),
-    ('biznes, ekonomia, marketing'),
-    ('dla dzieci'),
-    ('dla młodzieży'),
-    ('fantastyka, horror'),
-    ('historia'),
-    ('informatyka'),
-    ('komiks'),
-    ('kryminał, sensacja, thriller'),
-    ('książka regionalna'),
-    ('kuchnia i diety'),
-    ('lektury, pomoce szkolne'),
-    ('literatura faktu, reportaż'),
-    ('literatura obyczajowa'),
-    ('literatura piękna obca'),
-    ('literatura piękna polska'),
-    ('nauka języków'),
-    ('nauki społeczne i humanistyczne'),
-    ('nauki ścisłe, medycyna'),
-    ('podręczniki szkolne, edukacja'),
-    ('poezja, aforyzm, dramat'),
-    ('poradniki'),
-    ('prawo'),
-    ('religie i wyznania'),
-    ('rozwój osobisty'),
-    ('sport i wypoczynek'),
-    ('sztuka'),
-    ('turystyka i podróże'),
-    ('zdrowie, rodzina, związki');
+  ('biografie'),
+  ('biznes, ekonomia, marketing'),
+  ('dla dzieci'),
+  ('dla młodzieży'),
+  ('fantastyka, horror'),
+  ('historia'),
+  ('informatyka'),
+  ('komiks'),
+  ('kryminał, sensacja, thriller'),
+  ('książka regionalna'),
+  ('kuchnia i diety'),
+  ('lektury, pomoce szkolne'),
+  ('literatura faktu, reportaż'),
+  ('literatura obyczajowa'),
+  ('literatura piękna obca'),
+  ('literatura piękna polska'),
+  ('nauka języków'),
+  ('nauki społeczne i humanistyczne'),
+  ('nauki ścisłe, medycyna'),
+  ('podręczniki szkolne, edukacja'),
+  ('poezja, aforyzm, dramat'),
+  ('poradniki'),
+  ('prawo'),
+  ('religie i wyznania'),
+  ('rozwój osobisty'),
+  ('sport i wypoczynek'),
+  ('sztuka'),
+  ('turystyka i podróże'),
+  ('zdrowie, rodzina, związki');
 
 # 8. Stwórz tabelę przechowującą ksiązki
 # - identyfikator
@@ -183,22 +212,22 @@ VALUES ('audiobooki'),
 # - identyfikator gatunku literackiego
 
 CREATE TABLE books (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    isbn VARCHAR(50) NOT NULL,
-    published_at DATE NOT NULL,
-    genre_id INT NOT NULL,
-    FOREIGN KEY (genre_id) REFERENCES genres(id)
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  title        VARCHAR(255) NOT NULL,
+  isbn         VARCHAR(50)  NOT NULL,
+  published_at DATE         NOT NULL,
+  genre_id     INT          NOT NULL,
+  FOREIGN KEY (genre_id) REFERENCES genres (id)
 );
 
 # 9. Stwórz tabelę linkującą książki i autorów (relacja wiele do wielu)
 
 CREATE TABLE books_authors (
-    book_id INT NOT NULL,
-    author_id INT NOT NULL,
-    PRIMARY KEY (book_id, author_id),
-    FOREIGN KEY (book_id) REFERENCES books(id),
-    FOREIGN KEY (author_id) REFERENCES authors(id)
+  book_id   INT NOT NULL,
+  author_id INT NOT NULL,
+  PRIMARY KEY (book_id, author_id),
+  FOREIGN KEY (book_id) REFERENCES books (id),
+  FOREIGN KEY (author_id) REFERENCES authors (id)
 );
 
 # 10. Wstaw kilka książek i powiąż je z autorami.
@@ -206,68 +235,79 @@ CREATE TABLE books_authors (
 INSERT INTO books
 (title, isbn, published_at, genre_id)
 VALUES
-('The C++ Programming Language, 4th Edition', '978-83-246-8533-2', '2014-07-14', 12),
-('C++. 50 efektywnych sposobów na udoskonalenie', '83-7361-345-5', '2003-11-27', 12),
-('Wzorce projektowe. Leksykon kieszonkowy', '978-83-283-3999-6', '2017-09-18', 12),
-('Thinking in C++. Edycja polska. Tom 2', '83-7361-409-5', '2004-03-30', 12);
+  ('The C++ Programming Language, 4th Edition', '978-83-246-8533-2', '2014-07-14', 12),
+  ('C++. 50 efektywnych sposobów na udoskonalenie', '83-7361-345-5', '2003-11-27', 12),
+  ('Wzorce projektowe. Leksykon kieszonkowy', '978-83-283-3999-6', '2017-09-18', 12),
+  ('Thinking in C++. Edycja polska. Tom 2', '83-7361-409-5', '2004-03-30', 12);
 
-INSERT INTO books VALUES (NULL, 'Opowieści dziwnej treści.','30-231-32-34112', '2017-11-11', 2),
-(NULL , 'klsdoasaja askdkapda - język Fiński dla opornych','ds0-231-32-34112', '2432-11-11', 4),
-(NULL , 'Straszne historie','30-2das31-32-34112', '1002-11-11', 12),
-(NULL, 'Dla każdego coś miłego','30-231-32-34112', '2017-11-11', 15),
-(NULL , 'Bardzo trudna książka o niczym','ds0-231-32-34112', '2432-11-11', 7),
-(NULL , 'Poezja na trzeźwo!!!','30-2das31-32-34112', '1002-11-11', 1);
+INSERT INTO books VALUES (NULL, 'Opowieści dziwnej treści.', '30-231-32-34112', '2017-11-11', 2),
+  (NULL, 'klsdoasaja askdkapda - język Fiński dla opornych', 'ds0-231-32-34112', '2432-11-11', 4),
+  (NULL, 'Straszne historie', '30-2das31-32-34112', '1002-11-11', 12),
+  (NULL, 'Dla każdego coś miłego', '30-231-32-34112', '2017-11-11', 15),
+  (NULL, 'Bardzo trudna książka o niczym', 'ds0-231-32-34112', '2432-11-11', 7),
+  (NULL, 'Poezja na trzeźwo!!!', '30-2das31-32-34112', '1002-11-11', 1);
 
-insert into books_authors values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4), (5, 3), (6, 3), (7, 2), (8, 4), (8, 5), (8, 1), (9, 2), (10, 4), (1, 4), (10, 2), (5, 1);
-
-
+INSERT INTO books_authors
+VALUES (1, 1), (1, 2), (2, 2), (3, 3), (4, 4), (5, 3), (6, 3), (7, 2), (8, 4), (8, 5), (8, 1), (9, 2), (10, 4), (1, 4),
+  (10, 2), (5, 1);
 
 # 11. Napisz zapytania wyświetlające:
 # a) wszystkie książki z autorami i z gatunkiem literackim
-SELECT b.title, concat(a.firstname,' ',a.lastname) AS  autor, g.name FROM genres g
-JOIN books b ON g.id = b.genre_id
-JOIN books_authors ba ON b.id = ba.book_id
-JOIN authors a ON ba.author_id = a.id;
+SELECT
+  b.title,
+  concat(a.firstname, ' ', a.lastname) AS autor,
+  g.name
+FROM genres g
+  JOIN books b ON g.id = b.genre_id
+  JOIN books_authors ba ON b.id = ba.book_id
+  JOIN authors a ON ba.author_id = a.id;
 
 # b) autorów i ich wsystkie książki, ale tylko tych, których książki są w bibliotece
-SELECT concat(a.firstname,' ',a.lastname) as autor, b.title FROM authors a
-JOIN books_authors ba ON a.id = ba.author_id
-JOIN books b ON ba.book_id = b.id;
-
-SELECT CONCAT(a.firstname, ' ', a.lastname) AS 'author', b.title
+SELECT
+  concat(a.firstname, ' ', a.lastname) AS autor,
+  b.title
 FROM authors a
-    JOIN books_authors ba ON ba.author_id = a.id
-    JOIN books b ON b.id = ba.book_id
+  JOIN books_authors ba ON a.id = ba.author_id
+  JOIN books b ON ba.book_id = b.id;
+
+SELECT
+  CONCAT(a.firstname, ' ', a.lastname) AS 'author',
+  b.title
+FROM authors a
+  JOIN books_authors ba ON ba.author_id = a.id
+  JOIN books b ON b.id = ba.book_id
 ORDER BY a.lastname;
 
 # c) autorów i ich wsystkie książki, łącznie z tymi, których książek nie ma w bibliotece
 
 -- ????
 
-SELECT CONCAT(a.firstname, ' ', a.lastname) AS 'author', b.title
+SELECT
+  CONCAT(a.firstname, ' ', a.lastname) AS 'author',
+  b.title
 FROM authors a
-    LEFT JOIN books_authors ba ON ba.author_id = a.id
-    LEFT JOIN books b ON b.id = ba.book_id
+  LEFT JOIN books_authors ba ON ba.author_id = a.id
+  LEFT JOIN books b ON b.id = ba.book_id
 ORDER BY a.lastname;
 
 # d) autorów, których co najmniej jedna książka znajduje się w bibliotece
 SELECT DISTINCT CONCAT(a.firstname, ' ', a.lastname) AS 'author'
 FROM authors a
-    JOIN books_authors ba ON ba.author_id = a.id;
+  JOIN books_authors ba ON ba.author_id = a.id;
 
 # e) autorów, których książek nie ma w bibliotece
 SELECT DISTINCT CONCAT(a.firstname, ' ', a.lastname) AS 'author'
 FROM authors a
-    LEFT JOIN books_authors ba ON ba.author_id = a.id
+  LEFT JOIN books_authors ba ON ba.author_id = a.id
 WHERE books_authors.book_id IS NULL;
 
 # f) autorów, którzy napisali chociaż jeden kryminał (bez powtórzeń jeśli napisali więcej niż jeden)
 
 SELECT DISTINCT CONCAT(a.firstname, ' ', a.lastname) AS 'author'
 FROM authors a
-    JOIN books_authors ba ON ba.author_id = a.id
-    JOIN books b ON b.id = ba.book_id
-    JOIN genres g ON g.id = b.genre_id
+  JOIN books_authors ba ON ba.author_id = a.id
+  JOIN books b ON b.id = ba.book_id
+  JOIN genres g ON g.id = b.genre_id
 WHERE g.name LIKE 'kuchnia%';
 
 # 12. Zaprojektuj schemat dodatkowych tabel, który będzie umożliwiał przechowywanie
@@ -275,109 +315,133 @@ WHERE g.name LIKE 'kuchnia%';
 #  Utwórz zaprojektowane tabele i zasil je danymi.
 
 CREATE TABLE specimens (
-    id      INT AUTO_INCREMENT,
-    book_id INT NOT NULL,
-    code    VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (book_id) REFERENCES books (id)
+  id      INT AUTO_INCREMENT,
+  book_id INT          NOT NULL,
+  code    VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (book_id) REFERENCES books (id)
 );
 
 CREATE TABLE lendings (
-    id INT AUTO_INCREMENT,
-    client_id INT NOT NULL ,
-    specimen_id INT NOT NULL ,
-    lending_date DATETIME NOT NULL DEFAULT NOW(),
-    return_date DATETIME DEFAULT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (client_id) REFERENCES clients(id),
-    FOREIGN KEY (specimen_id) REFERENCES specimens(id)
+  id           INT               AUTO_INCREMENT,
+  client_id    INT      NOT NULL,
+  specimen_id  INT      NOT NULL,
+  lending_date DATETIME NOT NULL DEFAULT NOW(),
+  return_date  DATETIME          DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (client_id) REFERENCES clients (id),
+  FOREIGN KEY (specimen_id) REFERENCES specimens (id)
 );
 
-INSERT INTO specimens VALUES (null, 1, '11');
-INSERT INTO specimens VALUES (null, 1, '12');
-INSERT INTO specimens VALUES (null, 2, '21');
-INSERT INTO specimens VALUES (null, 3, '31');
+INSERT INTO specimens VALUES (NULL, 1, '11');
+INSERT INTO specimens VALUES (NULL, 1, '12');
+INSERT INTO specimens VALUES (NULL, 2, '21');
+INSERT INTO specimens VALUES (NULL, 3, '31');
 
-INSERT INTO lendings VALUES (null, 1, 4, now(), null);
-INSERT INTO lendings VALUES (null, 1, 1, now(), null);
-INSERT INTO lendings VALUES (null, 1, 3, now(), now());
+INSERT INTO lendings VALUES (NULL, 1, 4, now(), NULL);
+INSERT INTO lendings VALUES (NULL, 1, 1, now(), NULL);
+INSERT INTO lendings VALUES (NULL, 1, 3, now(), now());
 
 # 13. Napisz zapytania wyświetlające:
 # a) ilość wszystkich autrów
-SELECT count(authors.id) from authors;
+SELECT count(authors.id)
+FROM authors;
 
 # b) ilość wszystkich autorów, których co najmniej jedna książka znajduje się w bibliotece
-SELECT count(DISTINCT(a.id)) FROM authors a
-    JOIN books_authors ba on a.id = ba.author_id;
+SELECT count(DISTINCT (a.id))
+FROM authors a
+  JOIN books_authors ba ON a.id = ba.author_id;
 
 # c) książki, których co najmniej jeden egzemplarz jest dostępny do wypożycznia
 
 -- TODO
 
-select DISTINCT b.title from books b
-    JOIN speciments s on b.id = s.book_id
-    left JOIN lendings l on s.id = l.specimen_id
+SELECT DISTINCT b.title
+FROM books b
+  JOIN speciments s ON b.id = s.book_id
+  LEFT JOIN lendings l ON s.id = l.specimen_id
 WHERE l.return_date IS NOT NULL;
 # d) książki, których wszystkie egzemplarze są wypożyczone
 
 
-
 # e) gatunki literackie i ilość książek w każdym gatunku
-select g.name, count(b.id) FROM genres g
-    left JOIN books b ON g.id = b.genre_id
+SELECT
+  g.name,
+  count(b.id)
+FROM genres g
+  LEFT JOIN books b ON g.id = b.genre_id
 GROUP BY 1
 ORDER BY 2 DESC;
 
 # f) gatunki litereckie, które mają co najmniej jedną książkę posortowane po ilości książek malejąco
-select g.name, count(b.id) FROM genres g
-    left JOIN books b ON g.id = b.genre_id
+SELECT
+  g.name,
+  count(b.id)
+FROM genres g
+  LEFT JOIN books b ON g.id = b.genre_id
 GROUP BY 1
 HAVING count(b.id) > 0
 ORDER BY 2 DESC;
 
 # g) autorów, gatunki literackie oraz ilość książek danego autora z danego gatunku
-SELECT concat(a.firstname,' ',a.lastname) as autor, g.name, count(b.id) as ilosc FROM authors a
-    left JOIN books_authors ba on a.id = ba.author_id
-    JOIN books b on ba.book_id = b.id
-    left JOIN genres g on b.genre_id = g.id
+SELECT
+  concat(a.firstname, ' ', a.lastname) AS autor,
+  g.name,
+  count(b.id)                          AS ilosc
+FROM authors a
+  LEFT JOIN books_authors ba ON a.id = ba.author_id
+  JOIN books b ON ba.book_id = b.id
+  LEFT JOIN genres g ON b.genre_id = g.id
 GROUP BY autor, g.name
 ORDER BY 1;
 
 -- wersja maćka
-SELECT concat(firstname, ' ', lastname) AS author_name, genres.name, count(books.id)
+SELECT
+  concat(firstname, ' ', lastname) AS author_name,
+  genres.name,
+  count(books.id)
 FROM genres
-    CROSS JOIN authors
-    LEFT JOIN books_authors ON books_authors.author_id = authors.id
-    LEFT JOIN books ON books.id = books_authors.book_id
+  CROSS JOIN authors
+  LEFT JOIN books_authors ON books_authors.author_id = authors.id
+  LEFT JOIN books ON books.id = books_authors.book_id
 WHERE books.genre_id = genres.id
 GROUP BY author_name, genres.name
 ORDER BY count(books.id) DESC;
 
 # h) autorów oraz ilość kryminałów przez nich napisanych bez autorów, którzy nie napisali żadnego kryminału
 
-select DISTINCT concat(lastname,' ',firstname), count(b.id) as ilosc from authors a
-join books_authors ba on a.id = ba.author_id
-join books b on ba.book_id = b.id
-join genres g on b.genre_id = g.id
+SELECT DISTINCT
+  concat(lastname, ' ', firstname),
+  count(b.id) AS ilosc
+FROM authors a
+  JOIN books_authors ba ON a.id = ba.author_id
+  JOIN books b ON ba.book_id = b.id
+  JOIN genres g ON b.genre_id = g.id
 WHERE g.name LIKE 'biografie';
 
-select concat(a.lastname,' ',a.firstname) as autor, g.name, count(b.id) from authors a
-    JOIN books_authors ba ON a.id = ba.author_id
-    JOIN books b on ba.book_id = b.id
-    JOIN genres g ON b.genre_id = g.id
+SELECT
+  concat(a.lastname, ' ', a.firstname) AS autor,
+  g.name,
+  count(b.id)
+FROM authors a
+  JOIN books_authors ba ON a.id = ba.author_id
+  JOIN books b ON ba.book_id = b.id
+  JOIN genres g ON b.genre_id = g.id
 WHERE g.name = 'historia'
 GROUP BY autor, g.name;
 
 -- wersja Ani
-SELECT concat(authors.firstname, ' ', authors.lastname) AS author_name, genres.name, count(authors.id) AS liczba_książek
+SELECT
+  concat(authors.firstname, ' ', authors.lastname) AS author_name,
+  genres.name,
+  count(authors.id)                                AS liczba_książek
 FROM genres
-    JOIN books ON books.genre_id = genres.id
-    JOIN books_authors ON books_authors.book_id = books.id
-    JOIN authors ON authors.id = books_authors.author_id
+  JOIN books ON books.genre_id = genres.id
+  JOIN books_authors ON books_authors.book_id = books.id
+  JOIN authors ON authors.id = books_authors.author_id
 WHERE genres.name LIKE 'audiobooki'
 GROUP BY author_name, genres.name
-ORDER BY count(books.id) DESC
-;
+ORDER BY count(books.id) DESC;
 
 # Pobierz treningową bazę danych mysql stąd https://github.com/datacharmer/test_db i zastosuj się
 # do instrukcji żeby załadować schemat bazy danych oraz dane.
@@ -396,210 +460,323 @@ ORDER BY count(books.id) DESC
 # bazy danych używając notacji z zajęć np. przy użyciu Lucid Chart (ERD diagram).
 
 CREATE TABLE employees (
-    emp_no      INT             NOT NULL,
-    birth_date  DATE            NOT NULL,
-    first_name  VARCHAR(14)     NOT NULL,
-    last_name   VARCHAR(16)     NOT NULL,
-    gender      ENUM ('M','F')  NOT NULL,
-    hire_date   DATE            NOT NULL,
-    PRIMARY KEY (emp_no)
+  emp_no     INT             NOT NULL,
+  birth_date DATE            NOT NULL,
+  first_name VARCHAR(14)     NOT NULL,
+  last_name  VARCHAR(16)     NOT NULL,
+  gender     ENUM ('M', 'F') NOT NULL,
+  hire_date  DATE            NOT NULL,
+  PRIMARY KEY (emp_no)
 );
 
 CREATE TABLE departments (
-    dept_no     CHAR(4)         NOT NULL,
-    dept_name   VARCHAR(40)     NOT NULL,
-    PRIMARY KEY (dept_no),
-    UNIQUE  KEY (dept_name)
+  dept_no   CHAR(4)     NOT NULL,
+  dept_name VARCHAR(40) NOT NULL,
+  PRIMARY KEY (dept_no),
+  UNIQUE KEY (dept_name)
 );
 
 CREATE TABLE dept_manager (
-    emp_no       INT             NOT NULL,
-    dept_no      CHAR(4)         NOT NULL,
-    from_date    DATE            NOT NULL,
-    to_date      DATE            NOT NULL,
-    FOREIGN KEY (emp_no)  REFERENCES employees (emp_no)    ON DELETE CASCADE,
-    FOREIGN KEY (dept_no) REFERENCES departments (dept_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no,dept_no)
+  emp_no    INT     NOT NULL,
+  dept_no   CHAR(4) NOT NULL,
+  from_date DATE    NOT NULL,
+  to_date   DATE    NOT NULL,
+  FOREIGN KEY (emp_no) REFERENCES employees (emp_no)
+    ON DELETE CASCADE,
+  FOREIGN KEY (dept_no) REFERENCES departments (dept_no)
+    ON DELETE CASCADE,
+  PRIMARY KEY (emp_no, dept_no)
 );
 
 CREATE TABLE dept_emp (
-    emp_no      INT             NOT NULL,
-    dept_no     CHAR(4)         NOT NULL,
-    from_date   DATE            NOT NULL,
-    to_date     DATE            NOT NULL,
-    FOREIGN KEY (emp_no)  REFERENCES employees   (emp_no)  ON DELETE CASCADE,
-    FOREIGN KEY (dept_no) REFERENCES departments (dept_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no,dept_no)
+  emp_no    INT     NOT NULL,
+  dept_no   CHAR(4) NOT NULL,
+  from_date DATE    NOT NULL,
+  to_date   DATE    NOT NULL,
+  FOREIGN KEY (emp_no) REFERENCES employees (emp_no)
+    ON DELETE CASCADE,
+  FOREIGN KEY (dept_no) REFERENCES departments (dept_no)
+    ON DELETE CASCADE,
+  PRIMARY KEY (emp_no, dept_no)
 );
 
 CREATE TABLE titles (
-    emp_no      INT             NOT NULL,
-    title       VARCHAR(50)     NOT NULL,
-    from_date   DATE            NOT NULL,
-    to_date     DATE,
-    FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no,title, from_date)
-)
-;
+  emp_no    INT         NOT NULL,
+  title     VARCHAR(50) NOT NULL,
+  from_date DATE        NOT NULL,
+  to_date   DATE,
+  FOREIGN KEY (emp_no) REFERENCES employees (emp_no)
+    ON DELETE CASCADE,
+  PRIMARY KEY (emp_no, title, from_date)
+);
 
 CREATE TABLE salaries (
-    emp_no      INT             NOT NULL,
-    salary      INT             NOT NULL,
-    from_date   DATE            NOT NULL,
-    to_date     DATE            NOT NULL,
-    FOREIGN KEY (emp_no) REFERENCES employees (emp_no) ON DELETE CASCADE,
-    PRIMARY KEY (emp_no, from_date)
-)
-;
+  emp_no    INT  NOT NULL,
+  salary    INT  NOT NULL,
+  from_date DATE NOT NULL,
+  to_date   DATE NOT NULL,
+  FOREIGN KEY (emp_no) REFERENCES employees (emp_no)
+    ON DELETE CASCADE,
+  PRIMARY KEY (emp_no, from_date)
+);
 
 CREATE OR REPLACE VIEW dept_emp_latest_date AS
-    SELECT emp_no, MAX(from_date) AS from_date, MAX(to_date) AS to_date
-    FROM dept_emp
-    GROUP BY emp_no;
+  SELECT
+    emp_no,
+    MAX(from_date) AS from_date,
+    MAX(to_date)   AS to_date
+  FROM dept_emp
+  GROUP BY emp_no;
 
-SELECT * from dept_emp_latest_date ld
-    ORDER BY ld.to_date
-limit 15;
+SELECT *
+FROM dept_emp_latest_date ld
+ORDER BY ld.to_date
+LIMIT 15;
 
 # shows only the current department for each employee
 CREATE OR REPLACE VIEW current_dept_emp AS
-    SELECT l.emp_no, dept_no, l.from_date, l.to_date
-    FROM dept_emp d
-        INNER JOIN dept_emp_latest_date l
-            ON d.emp_no=l.emp_no AND d.from_date=l.from_date AND l.to_date = d.to_date;
+  SELECT
+    l.emp_no,
+    dept_no,
+    l.from_date,
+    l.to_date
+  FROM dept_emp d
+    INNER JOIN dept_emp_latest_date l
+      ON d.emp_no = l.emp_no AND d.from_date = l.from_date AND l.to_date = d.to_date;
 
 
-CREATE INDEX hire_date on employees(hire_date);
-CREATE INDEX to_date on dept_emp(to_date);
-CREATE INDEX to_date ON salaries(to_date);
+CREATE INDEX hire_date
+  ON employees (hire_date);
+CREATE INDEX to_date
+  ON dept_emp (to_date);
+CREATE INDEX to_date
+  ON salaries (to_date);
 
 # Napisz zapytania wyświetlające:
 #
 # 1. Imię i nazwisko pracownika, który ma nazwisko na literę A, który został najwcześniej zatrudniony.
-SELECT concat(first_name,' ',last_name) from employees
+SELECT concat(first_name, ' ', last_name)
+FROM employees
 WHERE last_name LIKE 'A%'
 ORDER BY hire_date
-limit 1;
+LIMIT 1;
 
 # 2. Ilość pracowników każdej płci.
-SELECT gender, count(gender) from employees
+SELECT
+  gender,
+  count(gender)
+FROM employees
 GROUP BY gender;
 
 # 3. Historię pracownika Georgi Facello.
-SELECT e.first_name, e.last_name, e.emp_no, s.salary, s.from_date, s.to_date FROM salaries s
-    JOIN employees e ON s.emp_no = e.emp_no
+SELECT
+  e.first_name,
+  e.last_name,
+  e.emp_no,
+  s.salary,
+  s.from_date,
+  s.to_date
+FROM salaries s
+  JOIN employees e ON s.emp_no = e.emp_no
 WHERE e.first_name = 'Georgi' AND e.last_name = 'Facello'
 ORDER BY s.from_date;
 -- wyższe pokazuję 2 prac o tych samych imie i nazwisko, a gdyby chciec zawęzić to:
-SELECT e.first_name, e.last_name, e.emp_no, s.salary, s.from_date, s.to_date FROM salaries s
-    JOIN employees e ON s.emp_no = e.emp_no
+SELECT
+  e.first_name,
+  e.last_name,
+  e.emp_no,
+  s.salary,
+  s.from_date,
+  s.to_date
+FROM salaries s
+  JOIN employees e ON s.emp_no = e.emp_no
 WHERE salaries.emp_no = (
-    SELECT
+  SELECT
 )
 ORDER BY s.from_date;
 
-
-
 # 4. Najczęściej powtarzające się imię wśród pracowników.
-SELECT e.first_name, count(e.first_name) FROM employees e
+SELECT
+  e.first_name,
+  count(e.first_name)
+FROM employees e
 GROUP BY e.first_name
 ORDER BY count(e.first_name) DESC
 LIMIT 1;
 
 # 5. Pierwszych 5 pracowników, którzy zarabiają najwięcej.
-SELECT e.first_name,e.last_name, s.salary FROM employees e
-JOIN salaries s ON e.emp_no = s.emp_no
+SELECT
+  e.first_name,
+  e.last_name,
+  s.salary
+FROM employees e
+  JOIN salaries s ON e.emp_no = s.emp_no
 WHERE s.to_date > current_date
 ORDER BY s.salary DESC
 LIMIT 5;
 
 # 6. 5 najpóźniej zatrudnionych pracowników oraz ich bieżący dział.
-select e.last_name, e.first_name, e.hire_date, d.dept_name FROM employees e
-JOIN dept_emp de ON e.emp_no = de.emp_no
-JOIN departments d ON de.dept_no = d.dept_no
-    WHERE de.to_date > current_date -- po to aby wyfiltrować aktualnie zatrudnionych
+SELECT
+  e.last_name,
+  e.first_name,
+  e.hire_date,
+  d.dept_name
+FROM employees e
+  JOIN dept_emp de ON e.emp_no = de.emp_no
+  JOIN departments d ON de.dept_no = d.dept_no
+WHERE de.to_date > current_date -- po to aby wyfiltrować aktualnie zatrudnionych
 ORDER BY e.hire_date DESC
 LIMIT 5;
 
 # 7. Działy oraz ich bieżących kierowników.
-SELECT d.dept_name, max(dm.from_date), e.last_name, e.last_name FROM departments d
-    JOIN dept_manager dm ON d.dept_no = dm.dept_no
-    JOIN employees e ON dm.emp_no = e.emp_no
-    WHERE dm.to_date > current_date
+SELECT
+  d.dept_name,
+  max(dm.from_date),
+  e.last_name,
+  e.last_name
+FROM departments d
+  JOIN dept_manager dm ON d.dept_no = dm.dept_no
+  JOIN employees e ON dm.emp_no = e.emp_no
+WHERE dm.to_date > current_date
 GROUP BY d.dept_name;
 
 # 8. 5 najwcześniej zatrudnionych pracowników wraz z ich bieżącym tytułem, działem oraz zarobkami.
 SELECT
-    r.last_name,
-    r.first_name,
-    r.hire_date,
-    t.title,
-    d.dept_name,
-    s.salary
+  r.last_name,
+  r.first_name,
+  r.hire_date,
+  t.title,
+  d.dept_name,
+  s.salary
 FROM
-    (
-        SELECT last_name, first_name, employees.emp_no, hire_date, dept_no FROM employees
-        JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
-        WHERE dept_emp.to_date > current_date
-        ORDER BY hire_date
-        LIMIT 5
-    ) r
-    JOIN departments d ON r.dept_no = d.dept_no
-    JOIN titles t ON r.emp_no = t.emp_no
-    JOIN salaries s ON r.emp_no = s.emp_no
-    WHERE t.to_date > current_date and s.to_date > current_date
-;
+  (
+    SELECT
+      last_name,
+      first_name,
+      employees.emp_no,
+      hire_date,
+      dept_no
+    FROM employees
+      JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+    WHERE dept_emp.to_date > current_date
+    ORDER BY hire_date
+    LIMIT 5
+  ) r
+  JOIN departments d ON r.dept_no = d.dept_no
+  JOIN titles t ON r.emp_no = t.emp_no
+  JOIN salaries s ON r.emp_no = s.emp_no
+WHERE t.to_date > current_date AND s.to_date > current_date;
 
 -- TODO co gdyby chodziło o emp i manager??
 
 # 9. Działy wraz ze średnimi zarobkami, największymi zarobkami, najmniejszymi zarobkami i ilością pracowników.
 #       Chodzi o bieżące zarobki i bieżącą ilość pracowników.
-SELECT d.dept_name, avg(s.salary), max(s.salary), min(s.salary), count(e.emp_no) from departments d
-    JOIN dept_emp de ON d.dept_no = de.dept_no
-    JOIN employees e ON de.emp_no = e.emp_no
-    JOIN salaries s ON e.emp_no = s.emp_no
-WHERE de.to_date > current_date and s.to_date > current_date
+SELECT
+  d.dept_name,
+  avg(s.salary),
+  max(s.salary),
+  min(s.salary),
+  count(e.emp_no)
+FROM departments d
+  JOIN dept_emp de ON d.dept_no = de.dept_no
+  JOIN employees e ON de.emp_no = e.emp_no
+  JOIN salaries s ON e.emp_no = s.emp_no
+WHERE de.to_date > current_date AND s.to_date > current_date
 GROUP BY d.dept_no
 ORDER BY d.dept_name;
 
 # 10. Średnią bieżącą pensję kierowników działów.
-SELECT d.dept_name, avg(s.salary) from departments d
-JOIN dept_manager dm ON d.dept_no = dm.dept_no
-JOIN salaries s ON dm.emp_no = s.emp_no
-WHERE dm.to_date > current_date and s.to_date > current_date
+SELECT
+  d.dept_name,
+  avg(s.salary)
+FROM departments d
+  JOIN dept_manager dm ON d.dept_no = dm.dept_no
+  JOIN salaries s ON dm.emp_no = s.emp_no
+WHERE dm.to_date > current_date AND s.to_date > current_date
 GROUP BY d.dept_no;
 
 -- lub wersja średniej dla wszystkich działów łącznie
-SELECT d.dept_name, avg(s.salary) from departments d
-    JOIN dept_manager dm ON d.dept_no = dm.dept_no
-    JOIN salaries s ON dm.emp_no = s.emp_no
-WHERE dm.to_date > current_date and s.to_date > current_date;
+SELECT
+  d.dept_name,
+  avg(s.salary)
+FROM departments d
+  JOIN dept_manager dm ON d.dept_no = dm.dept_no
+  JOIN salaries s ON dm.emp_no = s.emp_no
+WHERE dm.to_date > current_date AND s.to_date > current_date;
 
 # 11. Imię i nazwisko pracownika, który ma największą różnicę w pensji początkowej i bieżącej.
 
 SELECT
-    concat(e.last_name,' ',e.first_name) as employee,
-    abs(
-        (SELECT salary
-         FROM salaries
-         WHERE salaries.emp_no = e.emp_no
-         ORDER BY from_date ASC
-         LIMIT 1)
-        -
-        (SELECT salary
-         FROM salaries
-         WHERE salaries.emp_no = e.emp_no
-         ORDER BY from_date DESC
-         LIMIT 1)
-    ) AS dif
+  concat(e.last_name, ' ', e.first_name) AS employee,
+  abs(
+      (SELECT salary
+       FROM salaries
+       WHERE salaries.emp_no = e.emp_no
+       ORDER BY from_date ASC
+       LIMIT 1)
+      -
+      (SELECT salary
+       FROM salaries
+       WHERE salaries.emp_no = e.emp_no
+       ORDER BY from_date DESC
+       LIMIT 1)
+  )                                      AS dif
 FROM employees e
-    JOIN dept_emp ON e.emp_no = dept_emp.emp_no AND dept_emp.to_date > now()
+  JOIN dept_emp ON e.emp_no = dept_emp.emp_no AND dept_emp.to_date > now()
 ORDER BY dif DESC
 LIMIT 1;
 
 
-SELECT e.emp_no FROM employees e
-JOIN dept_emp de ON e.emp_no = de.emp_no
-JOIN dept_manager ON e.emp_no = dept_manager.emp_no
+SELECT e.emp_no
+FROM employees e
+  JOIN dept_emp de ON e.emp_no = de.emp_no
+  JOIN dept_manager ON e.emp_no = dept_manager.emp_no
 GROUP BY e.emp_no
-limit 25;
+LIMIT 25;
+
+SELECT
+  e.emp_no,
+  e.first_name,
+  e.last_name
+FROM employees e INNER JOIN salaries s ON e.emp_no = s.emp_no
+WHERE s.salary >= 100 AND s.to_date > now()
+LIMIT 10;
+
+SELECT
+  employee0_.emp_no     AS col_0_0_,
+  employee0_.first_name AS col_1_0_,
+  employee0_.last_name  AS col_2_0_
+FROM employees employee0_
+  INNER JOIN salaries salaries1_ ON employee0_.emp_no = salaries1_.emp_no
+WHERE salaries1_.salary >= 50000
+      AND salaries1_.salary <= 150000
+      AND salaries1_.to_date > now()
+LIMIT 15;
+
+SELECT e.emp_no, e.first_name, e.last_name FROM employees e
+JOIN dept_emp de ON e.emp_no = de.emp_no
+JOIN departments d ON de.dept_no = d.dept_no
+WHERE d.dept_no in ('d001', 'd002') AND de.to_date > now() AND e.last_name;
+
+select g.id_egzaminator, nazwisko, imie, count(distinct e.id_student) as liczba
+from egzaminatorzy g
+  inner join egzaminy e on g.id_egzaminator = e.id_egzaminator
+  inner join osrodki o on o.id_osrodek = e.id_osrodek
+where upper(nazwa_o) = 'CKMP'
+group by g.id_egzaminator, nazwisko, imie
+having count(distinct e.id_student) > 5
+ORDER BY 1, 4, 5 ;
+
+select d0_.dept_no, d0_.dept_name, d1_.dept_no, d1_.emp_no, d1_.dept_no, d1_.emp_no, d1_.from_date, d1_.to_date from departments d0_
+left outer join dept_emp d1_ on d0_.dept_no=d1_.dept_no where d0_.dept_no=?;
+
+select distinct e.emp_no, e.first_name, e.last_name from employees e
+  inner join dept_emp de on e.emp_no=de.emp_no
+  inner join departments d on de.dept_no=d.dept_no
+where 1=1 and de.to_date>? and (d.dept_no in (? , ?));
+
+select distinct e.emp_no, e.first_name, e.last_name from employees e
+  inner join titles t on e.emp_no=t.emp_no
+where 1=1 and (t.title in (? , ?)) and t.to_date>?;
+
+

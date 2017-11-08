@@ -46,7 +46,7 @@ public class CSVPurchaseRepository implements PurchaseRepository {
 
 
     private void toMap(String path, Map<String, Purchase> productsMap) {
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineSplit = line.split(";");
@@ -118,7 +118,7 @@ public class CSVPurchaseRepository implements PurchaseRepository {
     }
 
     private String toString(String[] productsTab) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (productsTab.length == 1)
             sb.append(productsTab[0]);
         if (productsTab.length > 1) {

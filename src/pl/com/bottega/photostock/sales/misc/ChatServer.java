@@ -18,7 +18,7 @@ public class ChatServer {
 
     public void work() throws IOException {
 
-        ServerSocket serverSocket = new ServerSocket(6661);
+        ServerSocket serverSocket = new ServerSocket(6662);
         while (true){
             Socket clientSocket = serverSocket.accept();
             Client client = new Client(this, clientSocket.getInputStream(), clientSocket.getOutputStream());

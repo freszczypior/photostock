@@ -101,9 +101,11 @@ public class Money implements Comparable<Money> {   // ta klasa jest tak skonstr
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Money)) return false;
+        if (!(o instanceof Money))
+            return false;
         Money money = (Money) o;
-        if (!cents.equals(money.cents)) return false;
+        if (!cents.equals(money.cents))
+            return false;
         return currency.equals(money.currency);
     }
 

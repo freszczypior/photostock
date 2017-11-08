@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ChatClient {
 
     private static final String HOST = "localhost";
-    private static final int PORT = 6661;
+    private static final int PORT = 6662;
 
     public static void main(String[] args) {
 

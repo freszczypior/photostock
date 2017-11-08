@@ -14,8 +14,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class CSVLightBoxRepository implements LightBoxRepository{
-    
+public class CSVLightBoxRepository implements LightBoxRepository {
+
     private String path;
     private ProductRepository productRepository;
     private ClientRepository clientRepository;
@@ -28,16 +28,16 @@ public class CSVLightBoxRepository implements LightBoxRepository{
 
     @Override
     public void save(LightBox lightBox) {
-        Map<String,LightBox> lightBoxMap = new HashMap<>();
+        Map<String, LightBox> lightBoxMap = new HashMap<>();
         toMap(path, lightBoxMap);
         lightBoxMap.put(lightBox.getNumber(), lightBox);
         toFile(lightBoxMap, path, false);
     }
-    
-    private void toFile(Map<String,LightBox> map, String path, boolean append){
-        try (OutputStream outputStream = new FileOutputStream(path, append)){
+
+    private void toFile(Map<String, LightBox> map, String path, boolean append) {
+        try (OutputStream outputStream = new FileOutputStream(path, append)) {
             PrintStream printStream = new PrintStream(outputStream);
-            for (Map.Entry<String,LightBox> entry: map.entrySet()){
+            for (Map.Entry<String, LightBox> entry : map.entrySet()) {
                 printStream.println(toLine(entry.getKey(), entry.getValue()));
             }
         } catch (FileNotFoundException e) {
@@ -48,10 +48,10 @@ public class CSVLightBoxRepository implements LightBoxRepository{
     }
 
     private void toMap(String path, Map<String, LightBox> map) {
-        try (BufferedReader br = new BufferedReader(new FileReader(path))){
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
-            while ((line = br.readLine()) != null){
-            String[] lineSplit = line.split(";");
+            while ((line = br.readLine()) != null) {
+                String[] lineSplit = line.split(";");
                 LightBox lb = toLightBox(lineSplit);
                 map.put(lb.getNumber(), lb);
             }
@@ -62,7 +62,7 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         }
     }
 
-    private String toLine(String number, LightBox lightBox) {     
+    private String toLine(String number, LightBox lightBox) {
         String name = lightBox.getName();
         List<Picture> picturesList = lightBox.getItems();
         String[] picturesTab = picturesList.toArray(new String[picturesList.size()]);
@@ -73,9 +73,9 @@ public class CSVLightBoxRepository implements LightBoxRepository{
     private LightBox toLightBox(String[] lineSplit) {
         String number = lineSplit[0];
         String name = lineSplit[1];
-        String [] pictures = lineSplit[2].split(",");
+        String[] pictures = lineSplit[2].split(",");
         List<Picture> pictureslist = null;
-        for (String temp: pictures) {
+        for (String temp : pictures) {
             Picture picture = (Picture) productRepository.get(Long.parseLong(temp));
             pictureslist.add(picture);
         }
@@ -84,13 +84,14 @@ public class CSVLightBoxRepository implements LightBoxRepository{
     }
 
     private String toString(String[] pictures) {        //TODO do nadklasy
-        StringBuffer sb = new StringBuffer();
-        if (pictures.length > 0) {
+        StringBuilder sb = new StringBuilder();
+        if (pictures.length == 1)
             sb.append(pictures[0]);
-            if (pictures.length > 1)
-                for (int i = 1; i < pictures.length; i++){
-                    sb.insert(0, pictures[i] + ",");
-                }
+        if (pictures.length > 1) {
+            sb.append(pictures[0]);
+            for (int i = 1; i < pictures.length; i++) {
+                sb.insert(0, pictures[i] + ",");
+            }
         }
         return sb.toString();
     }
@@ -101,7 +102,7 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         toMap(path, map);
         LightBox lightBox = map.get(number);
         if (lightBox != null)
-        return lightBox;
+            return lightBox;
         else
             throw new IllegalArgumentException("No such object in repository");
     }
@@ -111,12 +112,12 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         Map<String, LightBox> map = new HashMap<>();
         List<LightBox> list = new LinkedList<>();
         toMap(path, map);
-        for(LightBox lightBox: map.values()){
+        for (LightBox lightBox : map.values()) {
             if (lightBox.getClient().getNumber().equals(clientNumber))
                 list.add(lightBox);
         }
         if (list.size() > 0)
-        return list;
+            return list;
         else
             throw new IllegalArgumentException("No such object in repository");
     }

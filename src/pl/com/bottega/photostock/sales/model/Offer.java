@@ -12,12 +12,14 @@ public class Offer {
     public Offer(Client owner, Collection<Product> items) {
         this.owner = owner;
         this.items = new LinkedList<>(items);// set nie jest immutable, tworzę nową i przekazuję do niej tą z zewnątrz, którą dostaję, aby ktoś nie zmodyfikował mi mojej,
-        this.items.sort(new Comparator<Product>() {
-            @Override
-            public int compare(Product p1, Product p2) {
-                return p2.calculatePrice(owner).compareTo(p1.calculatePrice(owner));
-            }
-        });
+        this.items.sort((p1, p2) -> p2.calculatePrice(owner).compareTo(p1.calculatePrice(owner)));
+//        this.items.sort(
+//                new Comparator<Product>() {
+//            @Override
+//            public int compare(Product p1, Product p2) {
+//                return p2.calculatePrice(owner).compareTo(p1.calculatePrice(owner));
+//            }
+//        });
     }
 
     public boolean sameAs(Offer offer, Money money) {

@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class PhotostockApp {
 
-    private Scanner scanner = new Scanner(System.in);
     private final String PROD_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\products.csv";
     private final String LIGHTBOX_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\lightboxes.csv";
     private final String PURCHES_REPO_PATH = "C:\\Users\\freszczypior\\IdeaProjects\\photostock-summer-2017-master\\repo\\purchases.csv";

@@ -17,12 +17,13 @@ public class Purchase {
         this.buyer = buyer;
         this.items = items;
         this.purchaseDate = LocalDateTime.now();
-        this.items.sort(new Comparator<Product>() { // TODO dodałem sortowanie, items zmieniłem na List
-            @Override
-            public int compare(Product p1, Product p2) {
-                return p1.compareTo(p2);
-            }
-        });
+        this.items.sort((p1, p2) -> p1.compareTo(p2));
+//        this.items.sort(new Comparator<Product>() { // TODO dodałem sortowanie, items zmieniłem na List
+//            @Override
+//            public int compare(Product p1, Product p2) {
+//                return p1.compareTo(p2);
+//            }
+//        });
         for (Product product: items) {
             product.soldPer(buyer);
         }

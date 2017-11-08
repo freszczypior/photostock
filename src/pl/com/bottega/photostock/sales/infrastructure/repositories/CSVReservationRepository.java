@@ -63,7 +63,7 @@ public class CSVReservationRepository implements ReservationRepository {
             itemsNumTab[iter] = product.getNumber().toString();
             iter++;
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (itemsNumTab.length == 1)
             sb.append(itemsNumTab[0]);
         if (itemsNumTab.length > 1){

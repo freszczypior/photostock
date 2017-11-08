@@ -31,7 +31,7 @@ public class CSVProductRepository implements ProductRepository {
 
     @Override
     public Optional<Product> getOptional(Long number) {
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineSplit = line.split(";");
@@ -95,7 +95,7 @@ public class CSVProductRepository implements ProductRepository {
     }
 
     private void toMap(String path, Map<Long, Product> productsMap) {   //TODO a co z rozróżnieniem czy picture czy clip
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] lineSplit = line.split(";");
@@ -130,7 +130,7 @@ public class CSVProductRepository implements ProductRepository {
     }
 
     private String toString(String[] tags) {        //TODO do nadklasy
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (tags.length == 1)
             sb.append(tags[0]);
         if (tags.length > 1) {
@@ -153,7 +153,7 @@ public class CSVProductRepository implements ProductRepository {
         public List<Product> find (Client client, Set < String > tags, Money from, Money to)
         {      // TODO a co z klipami?
             List<Product> result = new LinkedList<>();
-            try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] lineSplit = line.split(";");

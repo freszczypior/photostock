@@ -25,7 +25,7 @@ public class ReleaseTheEmpJDBC {
     public static void main(String[] args) throws SQLException {
 
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost/employees?" +
-                "user=root&password=Agent007!");
+                "user=root&password=*****");
 
         String firstName = getFirstName();
         String lastName = getLastName();
