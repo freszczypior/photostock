@@ -1,5 +1,7 @@
 #Photostock
 
-Application which administrate seling pictures and clips by webside.
+Application managing the sale of photos.
 
 Bottega Java Backend Developer Academy
+
+Project 1
